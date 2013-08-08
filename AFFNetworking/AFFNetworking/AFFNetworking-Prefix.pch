@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'AFFNetworking' target in the 'AFFNetworking' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif
