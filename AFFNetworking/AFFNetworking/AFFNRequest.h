@@ -8,15 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum {
-    POST,
-    GET
-} postType;
+typedef NS_ENUM(NSUInteger, AFFNPostType)
+{
+    kAFFNPost,
+    kAFFNGet
+};
 
 @protocol AFFNRequestDelegate <NSObject>
 
-@property()void (^_completion)(NSDictionary *result);
-@property()void (^_failure)(NSError *error);
+@property (assign) void (^_completion)(NSDictionary *result);
+@property (assign) void (^_failure)(NSError *error);
 
 @end
 
@@ -25,7 +26,7 @@ typedef enum {
     @private
     NSDictionary *_params;
     NSString *_urlString;
-    postType _type;
+    AFFNPostType _type;
     NSURLConnection *_connection;
     
     NSURL *finalURL;
@@ -38,9 +39,9 @@ typedef enum {
     BOOL finished;
 }
 
-- (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(postType)type andParams:(NSDictionary *)params withCompletion:(void (^)(NSDictionary *result))completion andFailBlock:(void (^)(NSError *error))failure andSender:(id<AFFNRequestDelegate>)delegate;
+- (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(NSDictionary *result))completion andFailBlock:(void (^)(NSError *error))failure andDelegate:(id<AFFNRequestDelegate>)delegate;
 
 @property(readonly)float progress;
-@property(readwrite, retain)id<AFFNRequestDelegate> delegate;
+@property(readwrite, assign)id<AFFNRequestDelegate> delegate;
 
 @end

@@ -15,20 +15,20 @@
 
 @synthesize progress = _progress, delegate = _delegate;
 
-- (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(postType)type andParams:(NSDictionary *)params withCompletion:(void (^)(NSDictionary *result))completion andFailBlock:(void (^)(NSError *error))failure andSender:(id<AFFNRequestDelegate>)delegate
+- (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(NSDictionary *))completion andFailBlock:(void (^)(NSError *))failure andDelegate:(id<AFFNRequestDelegate>)delegate
 {
     self = [super init];
     if(self)
     {
-        executing = false;
-        finished = false;
+        executing = FALSE;
+        finished = FALSE;
         
-        _params = [[params copy] retain];
-        _urlString = [[urlString copy] retain];
+        _params = [params copy];
+        _urlString = [urlString copy];
         _type = type;
-        _delegate = [delegate retain];
-        _delegate._completion = completion;
-        _delegate._failure = failure;
+        _delegate = delegate;
+        _delegate._completion = [completion copy];
+        _delegate._failure = [failure copy];
         
         if(LAST_OPPERATION && NETWORK_QUEUE.operationCount == NETWORK_QUEUE.maxConcurrentOperationCount)
             [self addDependency:LAST_OPPERATION];
@@ -37,7 +37,7 @@
     return self;
 }
 
-- (BOOL)isConcurrent {return true;}
+- (BOOL)isConcurrent {return TRUE;}
 
 - (BOOL)isExecuting { return executing; }
 
@@ -46,12 +46,12 @@
 - (void)start
 {
     [self willChangeValueForKey: @"isExecuting"];
-    executing = true;
+    executing = TRUE;
     [self didChangeValueForKey: @"isExecuting"];
     
-    [self performSelector:_type == POST ? @selector(generatePOSTRequest) : @selector(generateGETRequest)];
+    [self performSelector:_type == kAFFNPost ? @selector(generatePOSTRequest) : @selector(generateGETRequest)];
     
-    _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:false];
+    _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:FALSE];
     
     if(_connection) {
         receivedData = [NSMutableData new];
@@ -159,7 +159,6 @@
     [request release];
     request = nil;
     
-    [_delegate release];
     _delegate = nil;
     
     if(_connection){
