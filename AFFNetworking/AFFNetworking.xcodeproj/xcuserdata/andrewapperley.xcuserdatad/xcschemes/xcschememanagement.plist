@@ -9,9 +9,19 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>AFFNetworkingTestHarness.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>0F85C08017B67BDD00922D58</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>0F8F996A17B1C02A00671F6F</key>
 		<dict>
 			<key>primary</key>

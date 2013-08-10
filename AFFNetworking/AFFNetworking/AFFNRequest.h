@@ -7,11 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
+
 typedef enum {
     POST,
     GET
 } postType;
+
+@protocol AFFNRequestDelegate <NSObject>
+
+@property()void (^_completion)(NSDictionary *result);
+@property()void (^_failure)(NSError *error);
+
+@end
 
 @interface AFFNRequest : NSOperation <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 {
@@ -24,14 +31,16 @@ typedef enum {
     NSURL *finalURL;
     NSMutableURLRequest *request;
     
-    void (^_completion)(NSDictionary *result);
-    void (^_failure)(NSError *error);
     NSMutableData *receivedData;
     NSDate *requestTime;
+    
+    BOOL executing;
+    BOOL finished;
 }
 
-- (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(postType)type andParams:(NSDictionary *)params withCompletion:(void (^)(NSDictionary *result))completion andFailBlock:(void (^)(NSError *error))failure;
+- (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(postType)type andParams:(NSDictionary *)params withCompletion:(void (^)(NSDictionary *result))completion andFailBlock:(void (^)(NSError *error))failure andSender:(id<AFFNRequestDelegate>)delegate;
 
 @property(readonly)float progress;
+@property(readwrite, retain)id<AFFNRequestDelegate> delegate;
 
 @end

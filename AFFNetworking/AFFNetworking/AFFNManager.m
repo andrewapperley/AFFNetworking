@@ -7,13 +7,14 @@
 //
 
 #import "AFFNManager.h"
-#import "AFFNRequest.h"
+
 
 @implementation AFFNManager
 
 static AFFNManager *sharedManager = nil;
-static NSOperationQueue *networkOperations = nil;
-static NSOperationQueue *cpuOperations = nil;
+
+@synthesize networkOperations = _networkOperations;
+@synthesize cpuOperations = _cpuOperations;
 
 + (AFFNManager *)sharedManager
 {
@@ -24,7 +25,7 @@ static NSOperationQueue *cpuOperations = nil;
     // instance is shared
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedManager = [[AFFNManager allocWithZone:NULL] init];
+        sharedManager = [[AFFNManager alloc] init];
     });
     
     return sharedManager;
@@ -32,24 +33,25 @@ static NSOperationQueue *cpuOperations = nil;
 
 - (void)addNetworkOperation:(AFFNRequest *)operation
 {
-    if(!networkOperations) {
+    if(!_networkOperations) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            networkOperations = [NSOperationQueue new];
-            networkOperations.maxConcurrentOperationCount = 4;
+            _networkOperations = [NSOperationQueue new];
+            _networkOperations.maxConcurrentOperationCount = 1;
         });
     }
     
-    [networkOperations addOperation:operation];
-    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
+        [_networkOperations addOperation:operation];
+    });
 }
 
 - (void)addCpuOperation:(AFFNRequest *)operation
 {
-    if(!cpuOperations) {
+    if(!_cpuOperations) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            cpuOperations = [NSOperationQueue new];
+            _cpuOperations = [NSOperationQueue new];
         });
     }
     
@@ -59,7 +61,7 @@ static NSOperationQueue *cpuOperations = nil;
 // This will never be dealloc'd so there is no need to have a dealloc method, release objects
 // as they are not used, this class will be alive for the entire lifespan of the app
 
-+ (id)allocWithZone:(NSZone *)zone
++ (id)init
 {
     return [[self sharedManager] retain];
 }

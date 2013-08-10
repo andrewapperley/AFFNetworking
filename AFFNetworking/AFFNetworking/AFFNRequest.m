@@ -7,40 +7,61 @@
 //
 
 #import "AFFNRequest.h"
-
-static NSThread *backgroundThread = nil;
-
+#import "AFFNManager.h"
 @implementation AFFNRequest
 
-@synthesize progress = _progress;
+#define LAST_OPPERATION [[[[AFFNManager sharedManager] networkOperations] operations] lastObject]
+#define NETWORK_QUEUE (NSOperationQueue *)[[AFFNManager sharedManager] networkOperations]
 
-- (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(postType)type andParams:(NSDictionary *)params withCompletion:(void (^)(NSDictionary *result))completion andFailBlock:(void (^)(NSError *error))failure
+@synthesize progress = _progress, delegate = _delegate;
+
+- (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(postType)type andParams:(NSDictionary *)params withCompletion:(void (^)(NSDictionary *result))completion andFailBlock:(void (^)(NSError *error))failure andSender:(id<AFFNRequestDelegate>)delegate
 {
     self = [super init];
     if(self)
     {
+        executing = false;
+        finished = false;
+        
         _params = [[params copy] retain];
         _urlString = [[urlString copy] retain];
         _type = type;
-        backgroundThread = [[NSThread alloc] init];
-        _completion = completion;
-        _failure = failure;
+        _delegate = [delegate retain];
+        _delegate._completion = completion;
+        _delegate._failure = failure;
+        
+        if(LAST_OPPERATION && NETWORK_QUEUE.operationCount == NETWORK_QUEUE.maxConcurrentOperationCount)
+            [self addDependency:LAST_OPPERATION];
     }
     
     return self;
 }
 
+- (BOOL)isConcurrent {return true;}
+
+- (BOOL)isExecuting { return executing; }
+
+- (BOOL)isFinished { return finished; }
+
 - (void)start
 {
-    [self performSelector:_type == POST ? @selector(generatePOSTRequest) : @selector(generateGETRequest)   onThread:backgroundThread withObject:nil waitUntilDone:true];
+    [self willChangeValueForKey: @"isExecuting"];
+    executing = true;
+    [self didChangeValueForKey: @"isExecuting"];
     
-    _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [self performSelector:_type == POST ? @selector(generatePOSTRequest) : @selector(generateGETRequest)];
+    
+    _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:false];
     
     if(_connection) {
         receivedData = [NSMutableData new];
+        
+        [_connection scheduleInRunLoop:[NSRunLoop mainRunLoop]
+                              forMode:NSDefaultRunLoopMode];
         [_connection start];
         
-        requestTime = [NSDate date];
+        
+        requestTime = [[NSDate date] retain];
         
         [finalURL release];
         finalURL = nil;
@@ -82,7 +103,7 @@ static NSThread *backgroundThread = nil;
     
     assert(error);
     
-    _failure(error);
+    _delegate._failure(error);
     
 }
 
@@ -105,14 +126,23 @@ static NSThread *backgroundThread = nil;
     
     NSTimeInterval totalRequestTime = [[NSDate date] timeIntervalSinceDate:requestTime];
     
-    NSString *dataString = [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding];
+    NSError *error;
     
-    _completion([NSDictionary dictionaryWithObjectsAndKeys:
-                 dataString, @"receivedData",
-                 totalRequestTime, @"requestTime", nil]);
+    NSJSONSerialization *json = [[NSJSONSerialization JSONObjectWithData:receivedData options:NSJSONReadingAllowFragments error: &error] retain];
     
-    [dataString release];
-    dataString = nil;
+    if (error)
+        assert(error);
+    
+    _delegate._completion([NSDictionary dictionaryWithObjectsAndKeys:
+                           json, @"receivedData",
+                           [NSNumber numberWithDouble:totalRequestTime], @"requestTime", nil]);
+    
+    [json release];
+    json = nil;
+    
+    [self willChangeValueForKey: @"isFinished"];
+    finished = true;
+    [self didChangeValueForKey: @"isFinished"];
 }
 
 - (void)dealloc
@@ -129,13 +159,16 @@ static NSThread *backgroundThread = nil;
     [request release];
     request = nil;
     
-    [backgroundThread release];
-    backgroundThread = nil;
+    [_delegate release];
+    _delegate = nil;
     
     if(_connection){
         [_connection release];
         _connection = nil;
     }
+    
+    [requestTime release];
+    requestTime = nil;
     
     if(receivedData){
         [receivedData release];
