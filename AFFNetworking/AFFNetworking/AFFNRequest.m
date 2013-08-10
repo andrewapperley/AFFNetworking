@@ -156,6 +156,12 @@
         _connection = nil;
     }
     
+    [_completion release];
+    _completion = nil;
+    
+    [_failure release];
+    _failure = nil;
+    
     [requestTime release];
     requestTime = nil;
     
