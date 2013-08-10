@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <UIKit/UIKit.h>
 typedef enum {
     POST,
     GET
@@ -19,6 +19,15 @@ typedef enum {
     NSDictionary *_params;
     NSString *_urlString;
     postType _type;
+    NSURLConnection *_connection;
+    
+    NSURL *finalURL;
+    NSURLRequest *request;
+    
+    void (^_completion)(NSDictionary *result);
+    void (^_failure)(NSError *error);
+    NSMutableData *receivedData;
+    NSDate *requestTime;
 }
 
 - (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(postType)type andParams:(NSDictionary *)params withCompletion:(void (^)(NSDictionary *result))completion andFailBlock:(void (^)(NSError *error))failure;

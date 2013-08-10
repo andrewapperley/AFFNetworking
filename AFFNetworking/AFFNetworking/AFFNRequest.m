@@ -21,6 +21,8 @@ static NSThread *backgroundThread = nil;
         _urlString = [[urlString copy] retain];
         _type = type;
         backgroundThread = [[NSThread alloc] init];
+        _completion = completion;
+        _failure = failure;
     }
     
     return self;
@@ -28,50 +30,71 @@ static NSThread *backgroundThread = nil;
 
 - (void)start
 {
-    [self performSelector:@selector(generateRequest) onThread:backgroundThread withObject:nil waitUntilDone:true];
+    [self performSelector:_type == POST ? @selector(generatePOSTRequest) : @selector(generateGETRequest)   onThread:backgroundThread withObject:nil waitUntilDone:true];
+    
+    _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    
+    if(_connection) {
+        receivedData = [NSMutableData new];
+        [_connection start];
+        
+        requestTime = [NSDate date];
+        
+        [finalURL release];
+        finalURL = nil;
+        
+        [request release];
+        request = nil;
+    }
 }
 
-- (void)generateRequest
+- (void)generatePOSTRequest
 {
+    finalURL = [[NSURL alloc] initWithString:_urlString];
     
+    request = [[NSURLRequest alloc] initWithURL:finalURL cachePolicy:NSURLCacheStorageAllowedInMemoryOnly timeoutInterval:120];
+    
+    [request setValuesForKeysWithDictionary:_params];
+    
+}
+
+- (void)generateGETRequest
+{
+    finalURL = [[NSURL alloc] initWithString:_urlString];
+    
+    request = [[NSURLRequest alloc] initWithURL:finalURL cachePolicy:NSURLCacheStorageAllowedInMemoryOnly timeoutInterval:120];
+    
+    [request setValuesForKeysWithDictionary:_params];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
+    [_connection release];
+    _connection = nil;
     
-}
-
-- (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response
-{
+    assert(error);
+    
+    _failure(error);
     
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-    
+    [receivedData setLength:0];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    
-}
-
-- (void)connection:(NSURLConnection *)connection
-        didSendBodyData:(NSInteger)bytesWritten
-        totalBytesWritten:(NSInteger)totalBytesWritten
-        totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite;
-{
-    
-}
-
-- (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse
-{
-    
+    [receivedData appendData:data];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
+    NSTimeInterval totalRequestTime = [[NSDate date] timeIntervalSinceDate:requestTime];
     
+    _completion([NSDictionary dictionaryWithObjectsAndKeys:
+                 receivedData, @"receivedData",
+                 totalRequestTime, @"requestTime", nil]);
 }
 
 - (void)dealloc
@@ -84,6 +107,16 @@ static NSThread *backgroundThread = nil;
     
     [backgroundThread release];
     backgroundThread = nil;
+    
+    if(_connection){
+        [_connection release];
+        _connection = nil;
+    }
+    
+    if(receivedData){
+        [receivedData release];
+        receivedData = nil;
+    }
     
     [super dealloc];
 }
