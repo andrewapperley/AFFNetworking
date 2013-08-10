@@ -23,10 +23,10 @@
         executing = false;
         finished = false;
         
-        _params = [[params copy] retain];
-        _urlString = [[urlString copy] retain];
+        _params = [params copy];
+        _urlString = [urlString copy];
         _type = type;
-        _delegate = [delegate retain];
+        _delegate = delegate;
         _delegate._completion = completion;
         _delegate._failure = failure;
         
@@ -101,10 +101,9 @@
     [_connection release];
     _connection = nil;
     
-    assert(error);
-    
     _delegate._failure(error);
     
+    assert(error);
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
@@ -158,9 +157,6 @@
     
     [request release];
     request = nil;
-    
-    [_delegate release];
-    _delegate = nil;
     
     if(_connection){
         [_connection release];
