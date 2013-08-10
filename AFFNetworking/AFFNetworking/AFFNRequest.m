@@ -101,10 +101,9 @@
     [_connection release];
     _connection = nil;
     
-    assert(error);
-    
     _delegate._failure(error);
     
+    assert(error);
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
@@ -160,7 +159,7 @@
     request = nil;
     
     _delegate = nil;
-    
+
     if(_connection){
         [_connection release];
         _connection = nil;
