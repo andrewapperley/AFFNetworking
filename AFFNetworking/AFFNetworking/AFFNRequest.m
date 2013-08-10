@@ -10,9 +10,6 @@
 #import "AFFNManager.h"
 @implementation AFFNRequest
 
-#define LAST_OPPERATION [[[[AFFNManager sharedManager] networkOperations] operations] lastObject]
-#define NETWORK_QUEUE (NSOperationQueue *)[[AFFNManager sharedManager] networkOperations]
-
 @synthesize progress = _progress;
 
 - (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(NSDictionary *))completion andFailBlock:(void (^)(NSError *))failure
@@ -28,9 +25,6 @@
         _type = type;
         _completion = [completion copy];
         _failure = [failure copy];
-        
-        if(LAST_OPPERATION && NETWORK_QUEUE.operationCount == NETWORK_QUEUE.maxConcurrentOperationCount)
-            [self addDependency:LAST_OPPERATION];
     }
     
     return self;

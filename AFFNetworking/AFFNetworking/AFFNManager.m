@@ -11,6 +11,8 @@
 
 @implementation AFFNManager
 
+#define LAST_NETWORK_OPERATION [_networkOperations.operations lastObject]
+
 static AFFNManager *sharedManager = nil;
 
 @synthesize networkOperations = _networkOperations;
@@ -21,8 +23,6 @@ static AFFNManager *sharedManager = nil;
     if(sharedManager)
         return sharedManager;
     
-    // Makes the singleton thread safe so the instance isnt created in more than one thread, same
-    // instance is shared
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedManager = [[AFFNManager alloc] init];
@@ -37,9 +37,12 @@ static AFFNManager *sharedManager = nil;
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
             _networkOperations = [NSOperationQueue new];
-            _networkOperations.maxConcurrentOperationCount = 1;
+            _networkOperations.maxConcurrentOperationCount = 4;
         });
     }
+    
+    if(LAST_NETWORK_OPERATION)
+        [operation addDependency:LAST_NETWORK_OPERATION];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
         [_networkOperations addOperation:operation];
@@ -56,10 +59,6 @@ static AFFNManager *sharedManager = nil;
     }
     
 }
-
-// Override the release, autorelease, retain count, and the alloc with zone methods
-// This will never be dealloc'd so there is no need to have a dealloc method, release objects
-// as they are not used, this class will be alive for the entire lifespan of the app
 
 + (id)init
 {
