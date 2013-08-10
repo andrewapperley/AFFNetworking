@@ -13,9 +13,9 @@
 #define LAST_OPPERATION [[[[AFFNManager sharedManager] networkOperations] operations] lastObject]
 #define NETWORK_QUEUE (NSOperationQueue *)[[AFFNManager sharedManager] networkOperations]
 
-@synthesize progress = _progress, delegate = _delegate;
+@synthesize progress = _progress;
 
-- (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(NSDictionary *))completion andFailBlock:(void (^)(NSError *))failure andDelegate:(id<AFFNRequestDelegate>)delegate
+- (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(NSDictionary *))completion andFailBlock:(void (^)(NSError *))failure
 {
     self = [super init];
     if(self)
@@ -26,9 +26,8 @@
         _params = [params copy];
         _urlString = [urlString copy];
         _type = type;
-        _delegate = delegate;
-        _delegate._completion = [completion copy];
-        _delegate._failure = [failure copy];
+        _completion = [completion copy];
+        _failure = [failure copy];
         
         if(LAST_OPPERATION && NETWORK_QUEUE.operationCount == NETWORK_QUEUE.maxConcurrentOperationCount)
             [self addDependency:LAST_OPPERATION];
@@ -101,7 +100,7 @@
     [_connection release];
     _connection = nil;
     
-    _delegate._failure(error);
+    _failure(error);
     
     assert(error);
 }
@@ -132,7 +131,7 @@
     if (error)
         assert(error);
     
-    _delegate._completion([NSDictionary dictionaryWithObjectsAndKeys:
+    _completion([NSDictionary dictionaryWithObjectsAndKeys:
                            json, @"receivedData",
                            [NSNumber numberWithDouble:totalRequestTime], @"requestTime", nil]);
     
@@ -158,8 +157,6 @@
     [request release];
     request = nil;
     
-    _delegate = nil;
-
     if(_connection){
         [_connection release];
         _connection = nil;

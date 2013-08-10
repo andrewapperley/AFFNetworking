@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "AFFNRequest.h"
 #import "AFFNManager.h"
-@interface ViewController : UIViewController<AFFNRequestDelegate>
+@interface ViewController : UIViewController
 
 @end

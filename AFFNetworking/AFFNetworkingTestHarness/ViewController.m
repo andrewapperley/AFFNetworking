@@ -15,26 +15,16 @@
 
 @implementation ViewController
 
-@synthesize _completion, _failure;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    _completion = ^(NSDictionary *result){
-        NSLog(@"TOTAL TIME: %f",[[result objectForKey:@"requestTime"] doubleValue]);
-//        NSLog(@"%@",[result objectForKey:@"receivedData"]);
-    };
-    
-    _failure = ^(NSError *error) {
-        
-    };
-    
-    for (int i = 0; i < 20; i++) {
+       for (int i = 0; i < 20; i++) {
         AFFNRequest *request = [[AFFNRequest alloc] initWithURL:@"http://api.openweathermap.org/data/2.5/find?q=London&type=like&mode=json" connectionType:kAFFNPost andParams:nil withCompletion:^(NSDictionary *result) {
             NSLog(@"TOTAL TIME: %f",[[result objectForKey:@"requestTime"] doubleValue]);
-        } andFailBlock:nil andDelegate:self];
+        } andFailBlock:nil ];
         
         [[AFFNManager sharedManager] addNetworkOperation:request];
         

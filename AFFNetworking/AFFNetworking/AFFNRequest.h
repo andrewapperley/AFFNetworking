@@ -14,13 +14,6 @@ typedef NS_ENUM(NSUInteger, AFFNPostType)
     kAFFNGet
 };
 
-@protocol AFFNRequestDelegate <NSObject>
-
-@property (assign) void (^_completion)(NSDictionary *result);
-@property (assign) void (^_failure)(NSError *error);
-
-@end
-
 @interface AFFNRequest : NSOperation <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 {
     @private
@@ -37,11 +30,13 @@ typedef NS_ENUM(NSUInteger, AFFNPostType)
     
     BOOL executing;
     BOOL finished;
+    
+    void (^_completion)(NSDictionary *result);
+    void (^_failure)(NSError *error);
 }
 
-- (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(NSDictionary *result))completion andFailBlock:(void (^)(NSError *error))failure andDelegate:(id<AFFNRequestDelegate>)delegate;
+- (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(NSDictionary *result))completion andFailBlock:(void (^)(NSError *error))failure;
 
 @property(readonly)float progress;
-@property(readwrite, assign)id<AFFNRequestDelegate> delegate;
 
 @end
