@@ -22,7 +22,7 @@ typedef enum {
     NSURLConnection *_connection;
     
     NSURL *finalURL;
-    NSURLRequest *request;
+    NSMutableURLRequest *request;
     
     void (^_completion)(NSDictionary *result);
     void (^_failure)(NSError *error);
@@ -31,5 +31,7 @@ typedef enum {
 }
 
 - (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(postType)type andParams:(NSDictionary *)params withCompletion:(void (^)(NSDictionary *result))completion andFailBlock:(void (^)(NSError *error))failure;
+
+@property(readonly)float progress;
 
 @end

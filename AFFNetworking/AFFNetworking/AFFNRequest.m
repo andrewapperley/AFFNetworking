@@ -12,6 +12,8 @@ static NSThread *backgroundThread = nil;
 
 @implementation AFFNRequest
 
+@synthesize progress = _progress;
+
 - (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(postType)type andParams:(NSDictionary *)params withCompletion:(void (^)(NSDictionary *result))completion andFailBlock:(void (^)(NSError *error))failure
 {
     self = [super init];
@@ -52,19 +54,25 @@ static NSThread *backgroundThread = nil;
 {
     finalURL = [[NSURL alloc] initWithString:_urlString];
     
-    request = [[NSURLRequest alloc] initWithURL:finalURL cachePolicy:NSURLCacheStorageAllowedInMemoryOnly timeoutInterval:120];
+    request = [[NSMutableURLRequest alloc] initWithURL:finalURL cachePolicy:NSURLCacheStorageAllowedInMemoryOnly timeoutInterval:120];
     
+    [request setHTTPMethod:@"POST"];
+    
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
+    //this part may be wrong, would have to look into or test
     [request setValuesForKeysWithDictionary:_params];
     
 }
 
 - (void)generateGETRequest
 {
-    finalURL = [[NSURL alloc] initWithString:_urlString];
-    
-    request = [[NSURLRequest alloc] initWithURL:finalURL cachePolicy:NSURLCacheStorageAllowedInMemoryOnly timeoutInterval:120];
-    
-    [request setValuesForKeysWithDictionary:_params];
+   
+}
+
+- (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
+{
+    _progress = (totalBytesWritten / totalBytesExpectedToWrite) * 100;
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
@@ -81,6 +89,8 @@ static NSThread *backgroundThread = nil;
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
     [receivedData setLength:0];
+    _progress = 0;
+    
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
@@ -90,11 +100,19 @@ static NSThread *backgroundThread = nil;
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
+    [_connection release];
+    _connection = nil;
+    
     NSTimeInterval totalRequestTime = [[NSDate date] timeIntervalSinceDate:requestTime];
     
+    NSString *dataString = [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding];
+    
     _completion([NSDictionary dictionaryWithObjectsAndKeys:
-                 receivedData, @"receivedData",
+                 dataString, @"receivedData",
                  totalRequestTime, @"requestTime", nil]);
+    
+    [dataString release];
+    dataString = nil;
 }
 
 - (void)dealloc
@@ -104,6 +122,12 @@ static NSThread *backgroundThread = nil;
     
     [_urlString release];
     _urlString = nil;
+    
+    [finalURL release];
+    finalURL = nil;
+    
+    [request release];
+    request = nil;
     
     [backgroundThread release];
     backgroundThread = nil;
