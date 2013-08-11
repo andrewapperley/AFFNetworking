@@ -66,6 +66,19 @@ NSString *__AFFNKeyFinished = @"isFinished";
 
 - (void)start
 {
+    if(self.isCancelled) {
+        [self willChangeValueForKey:__AFFNKeyExecuting];
+        executing = false;
+        [self didChangeValueForKey:__AFFNKeyExecuting];
+        
+        [self willChangeValueForKey:__AFFNKeyFinished];
+        finished = true;
+        [self didChangeValueForKey:__AFFNKeyFinished];
+
+        _completion(nil);
+        return;
+    }
+    
     [self willChangeValueForKey:__AFFNKeyExecuting];
     executing = TRUE;
     [self didChangeValueForKey:__AFFNKeyExecuting];
