@@ -24,6 +24,12 @@ NSString *__AFFNKeyFinished = @"isFinished";
 @synthesize storagePolicy = _storagePolicy;
 
 #pragma mark - Init
+
+/*
+ * Init function to create the reqest object. It takes the URL in NSString format, POST/GET type, params to be used
+ * in the request in NSDictionary format, and a completion/fail block for a callback.
+ *
+ */
 + (AFFNRequest *)requestWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailBlock:(void (^)(NSError *error))failure
 {
     return [[[self alloc] initWithURL:urlString connectionType:type andParams:params withCompletion:completion andFailBlock:failure] autorelease];
@@ -52,6 +58,10 @@ NSString *__AFFNKeyFinished = @"isFinished";
 }
 
 #pragma mark - Properties
+
+/*
+ * BOOL returning functions that return the state of the request
+ */
 - (BOOL)isConcurrent
 {
     return _isConcurrent;
@@ -68,8 +78,26 @@ NSString *__AFFNKeyFinished = @"isFinished";
 }
 
 #pragma mark - Generate requests
+
+/*
+ * The main function of where the request creates the POST/GET request and the connection object, then starts the process.
+ */
 - (void)start
 {
+    if(self.isCancelled) {
+        [self willChangeValueForKey:__AFFNKeyExecuting];
+        executing = false;
+        [self didChangeValueForKey:__AFFNKeyExecuting];
+        
+        [self willChangeValueForKey:__AFFNKeyFinished];
+        finished = true;
+        [self didChangeValueForKey:__AFFNKeyFinished];
+        
+        //temp custom error code/string
+        _failure([NSError errorWithDomain:@"operation.cancelled" code:600 userInfo:nil]);
+        return;
+    }
+    
     [self willChangeValueForKey:__AFFNKeyExecuting];
     executing = TRUE;
     [self didChangeValueForKey:__AFFNKeyExecuting];
@@ -82,7 +110,7 @@ NSString *__AFFNKeyFinished = @"isFinished";
         receivedData = [NSMutableData new];
         
         [_connection scheduleInRunLoop:[NSRunLoop mainRunLoop]
-                              forMode:NSDefaultRunLoopMode];
+                               forMode:NSDefaultRunLoopMode];
         [_connection start];
         
         
@@ -96,6 +124,7 @@ NSString *__AFFNKeyFinished = @"isFinished";
     }
 }
 
+//Generates a POST type request
 - (void)generatePOSTRequest
 {
     
@@ -112,17 +141,21 @@ NSString *__AFFNKeyFinished = @"isFinished";
     
 }
 
+//Generates a GET type request
 - (void)generateGETRequest
 {
    
 }
 
 #pragma mark - Connection handling
+
+//Calculates the progress of the request
 - (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
     _progress = (totalBytesWritten / totalBytesExpectedToWrite);
 }
 
+//Failure of the connection, returns the error through the failure block
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     [_connection release];
@@ -130,9 +163,18 @@ NSString *__AFFNKeyFinished = @"isFinished";
     
     _failure(error);
     
+    [self willChangeValueForKey:__AFFNKeyExecuting];
+    executing = false;
+    [self didChangeValueForKey:__AFFNKeyExecuting];
+
+    [self willChangeValueForKey:__AFFNKeyFinished];
+    finished = true;
+    [self didChangeValueForKey:__AFFNKeyFinished];
+
     assert(error);
 }
 
+//Sets the progress and data to 0 as a request/attempt has started
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
     [receivedData setLength:0];
@@ -140,21 +182,27 @@ NSString *__AFFNKeyFinished = @"isFinished";
     
 }
 
+//Appends data to the data object
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     [receivedData appendData:data];
 }
 
+//Successful request function. Returns the total request time and data to the completion block in a AFFNCallbackObject
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
     [_connection release];
     _connection = nil;
     
     NSTimeInterval totalRequestTime = [[NSDate date] timeIntervalSinceDate:requestTime];
-   
+    
     AFFNCallbackObject *callBack = [AFFNCallbackObject callbackWithData:receivedData andReqestTime:totalRequestTime];
     
     _completion(callBack);
+        
+    [self willChangeValueForKey:__AFFNKeyExecuting];
+    executing = false;
+    [self didChangeValueForKey:__AFFNKeyExecuting];
     
     [self willChangeValueForKey:__AFFNKeyFinished];
     finished = true;
@@ -162,6 +210,8 @@ NSString *__AFFNKeyFinished = @"isFinished";
 }
 
 #pragma mark - Dealloc
+
+//Clean up memory
 - (void)dealloc
 {
     [_params release];
