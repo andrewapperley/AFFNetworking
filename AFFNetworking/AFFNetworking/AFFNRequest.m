@@ -152,7 +152,9 @@ NSString *__AFFNKeyFinished = @"isFinished";
     
     [request setHTTPBody:data];
     [request setValue:[NSString stringWithFormat:@"%d", data.length] forHTTPHeaderField:@"Content-Length"];
-    [request setValue:@"application/x-www-form-urlencoded charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:@"iOS" forHTTPHeaderField:@"User-Agent"];
     
    
 }
