@@ -23,7 +23,7 @@ NSString *__AFFNKeyFinished = @"isFinished";
 @synthesize timeoutInterval = _timeoutInterval;
 @synthesize storagePolicy = _storagePolicy;
 
-- (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(NSDictionary *))completion andFailBlock:(void (^)(NSError *))failure
+- (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *))completion andFailBlock:(void (^)(NSError *))failure
 {
     self = [super init];
     if(self)
@@ -133,19 +133,13 @@ NSString *__AFFNKeyFinished = @"isFinished";
     _connection = nil;
     
     NSTimeInterval totalRequestTime = [[NSDate date] timeIntervalSinceDate:requestTime];
+   
+    AFFNCallbackObject *callBack = [[AFFNCallbackObject alloc] initWithData:receivedData andReqestTime:totalRequestTime];
     
-    NSError *error;
+    _completion(callBack);
     
-    NSJSONSerialization *json = [[NSJSONSerialization JSONObjectWithData:receivedData options:NSJSONReadingAllowFragments error: &error] retain];
-    
-    assert(error);
-    
-    _completion([NSDictionary dictionaryWithObjectsAndKeys:
-                           json, @"receivedData",
-                           [NSNumber numberWithDouble:totalRequestTime], @"requestTime", nil]);
-    
-    [json release];
-    json = nil;
+    [callBack release];
+    callBack = nil;
     
     [self willChangeValueForKey:__AFFNKeyFinished];
     finished = true;

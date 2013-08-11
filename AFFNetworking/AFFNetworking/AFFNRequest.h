@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AFFNCallbackObject.h"
 
 typedef NS_ENUM(NSUInteger, AFFNPostType)
 {
@@ -31,11 +32,11 @@ typedef NS_ENUM(NSUInteger, AFFNPostType)
     BOOL executing;
     BOOL finished;
     
-    void (^_completion)(NSDictionary *result);
+    void (^_completion)(AFFNCallbackObject *result);
     void (^_failure)(NSError *error);
 }
 
-- (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(NSDictionary *result))completion andFailBlock:(void (^)(NSError *error))failure;
+- (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailBlock:(void (^)(NSError *error))failure;
 
 @property (readonly) float progress;                    //A float between 0.0 and 1.0
 @property (nonatomic, assign) BOOL isConcurrent;        //Default is 'TRUE'

@@ -21,6 +21,7 @@
 		0F85C09E17B67BDD00922D58 /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F85C09C17B67BDD00922D58 /* ViewController_iPhone.xib */; };
 		0F85C0A117B67BDD00922D58 /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F85C09F17B67BDD00922D58 /* ViewController_iPad.xib */; };
 		0F85C0A517B67FFE00922D58 /* libAFFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F8F996B17B1C02A00671F6F /* libAFFNetworking.a */; };
+		0F85C0A817B73AE000922D58 /* AFFNCallbackObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F85C0A717B73AE000922D58 /* AFFNCallbackObject.m */; };
 		0F8F996F17B1C02A00671F6F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F8F996E17B1C02A00671F6F /* Foundation.framework */; };
 		0F8F997417B1C02A00671F6F /* AFFNetworking.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0F8F997317B1C02A00671F6F /* AFFNetworking.h */; };
 		0F8F997617B1C02A00671F6F /* AFFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8F997517B1C02A00671F6F /* AFFNetworking.m */; };
@@ -59,6 +60,8 @@
 		0F85C09A17B67BDD00922D58 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		0F85C09D17B67BDD00922D58 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPhone.xib; sourceTree = "<group>"; };
 		0F85C0A017B67BDD00922D58 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPad.xib; sourceTree = "<group>"; };
+		0F85C0A617B73AE000922D58 /* AFFNCallbackObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFFNCallbackObject.h; sourceTree = "<group>"; };
+		0F85C0A717B73AE000922D58 /* AFFNCallbackObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFFNCallbackObject.m; sourceTree = "<group>"; };
 		0F8F996B17B1C02A00671F6F /* libAFFNetworking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAFFNetworking.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F8F996E17B1C02A00671F6F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0F8F997217B1C02A00671F6F /* AFFNetworking-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AFFNetworking-Prefix.pch"; sourceTree = "<group>"; };
@@ -158,6 +161,8 @@
 				0F8F997D17B1E47C00671F6F /* AFFNRequest.m */,
 				0F38C33217B1FFB300ACEBB4 /* AFFNManager.h */,
 				0F38C33317B1FFB300ACEBB4 /* AFFNManager.m */,
+				0F85C0A617B73AE000922D58 /* AFFNCallbackObject.h */,
+				0F85C0A717B73AE000922D58 /* AFFNCallbackObject.m */,
 			);
 			path = AFFNetworking;
 			sourceTree = "<group>";
@@ -268,6 +273,7 @@
 				0F8F997617B1C02A00671F6F /* AFFNetworking.m in Sources */,
 				0F8F997E17B1E47C00671F6F /* AFFNRequest.m in Sources */,
 				0F38C33417B1FFB300ACEBB4 /* AFFNManager.m in Sources */,
+				0F85C0A817B73AE000922D58 /* AFFNCallbackObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,6 +425,7 @@
 				0F85C0A317B67BDD00922D58 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0F8F996617B1C02A00671F6F /* Build configuration list for PBXProject "AFFNetworking" */ = {
 			isa = XCConfigurationList;
