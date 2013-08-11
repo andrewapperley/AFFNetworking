@@ -37,6 +37,8 @@ typedef NS_ENUM(NSUInteger, AFFNPostType)
 
 - (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(NSDictionary *result))completion andFailBlock:(void (^)(NSError *error))failure;
 
-@property(readonly)float progress;
+@property (readonly) float progress;
+@property (nonatomic, assign) NSTimeInterval timeoutInterval;
+@property (nonatomic, assign) NSURLCacheStoragePolicy storagePolicy;
 
 @end

@@ -8,9 +8,19 @@
 
 #import "AFFNRequest.h"
 #import "AFFNManager.h"
+
+#pragma mark - Constants
+const NSTimeInterval __AFFNDefaultTimeout = 120;
+const NSURLCacheStoragePolicy __AFFNDefaultStoragePolicy = NSURLCacheStorageAllowedInMemoryOnly;
+
+NSString *__AFFNKeyExecuting = @"isExecuting";
+NSString *__AFFNKeyFinished = @"isFinished";
+
 @implementation AFFNRequest
 
 @synthesize progress = _progress;
+@synthesize timeoutInterval = _timeoutInterval;
+@synthesize storagePolicy = _storagePolicy;
 
 - (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(NSDictionary *))completion andFailBlock:(void (^)(NSError *))failure
 {
@@ -19,6 +29,9 @@
     {
         executing = FALSE;
         finished = FALSE;
+        
+        _timeoutInterval = __AFFNDefaultTimeout;
+        _storagePolicy = __AFFNDefaultStoragePolicy;
         
         _params = [params copy];
         _urlString = [urlString copy];
@@ -38,9 +51,9 @@
 
 - (void)start
 {
-    [self willChangeValueForKey: @"isExecuting"];
+    [self willChangeValueForKey:__AFFNKeyExecuting];
     executing = TRUE;
-    [self didChangeValueForKey: @"isExecuting"];
+    [self didChangeValueForKey:__AFFNKeyExecuting];
     
     [self performSelector:_type == kAFFNPost ? @selector(generatePOSTRequest) : @selector(generateGETRequest)];
     
@@ -66,9 +79,10 @@
 
 - (void)generatePOSTRequest
 {
+    
     finalURL = [[NSURL alloc] initWithString:_urlString];
     
-    request = [[NSMutableURLRequest alloc] initWithURL:finalURL cachePolicy:NSURLCacheStorageAllowedInMemoryOnly timeoutInterval:120];
+    request = [[NSMutableURLRequest alloc] initWithURL:finalURL cachePolicy:_storagePolicy timeoutInterval:_timeoutInterval];
     
     [request setHTTPMethod:@"POST"];
     
@@ -132,9 +146,9 @@
     [json release];
     json = nil;
     
-    [self willChangeValueForKey: @"isFinished"];
+    [self willChangeValueForKey:__AFFNKeyFinished];
     finished = true;
-    [self didChangeValueForKey: @"isFinished"];
+    [self didChangeValueForKey:__AFFNKeyFinished];
 }
 
 - (void)dealloc

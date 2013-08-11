@@ -6,8 +6,9 @@
 //  Copyright (c) 2013 AFApps. All rights reserved.
 //
 
+#import "AFFNRequest.h"
+#import "AFFNManager.h"
 #import "ViewController.h"
-
 
 @interface ViewController ()
 
