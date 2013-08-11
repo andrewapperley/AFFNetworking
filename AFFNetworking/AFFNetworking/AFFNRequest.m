@@ -19,6 +19,7 @@ NSString *__AFFNKeyFinished = @"isFinished";
 @implementation AFFNRequest
 
 @synthesize progress = _progress;
+@synthesize isConcurrent = _isConcurrent;
 @synthesize timeoutInterval = _timeoutInterval;
 @synthesize storagePolicy = _storagePolicy;
 
@@ -30,6 +31,7 @@ NSString *__AFFNKeyFinished = @"isFinished";
         executing = FALSE;
         finished = FALSE;
         
+        _isConcurrent = TRUE;
         _timeoutInterval = __AFFNDefaultTimeout;
         _storagePolicy = __AFFNDefaultStoragePolicy;
         
@@ -43,7 +45,7 @@ NSString *__AFFNKeyFinished = @"isFinished";
     return self;
 }
 
-- (BOOL)isConcurrent {return TRUE;}
+- (BOOL)isConcurrent { return _isConcurrent; }
 
 - (BOOL)isExecuting { return executing; }
 
@@ -100,7 +102,7 @@ NSString *__AFFNKeyFinished = @"isFinished";
 
 - (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
-    _progress = (totalBytesWritten / totalBytesExpectedToWrite) * 100;
+    _progress = (totalBytesWritten / totalBytesExpectedToWrite);
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error

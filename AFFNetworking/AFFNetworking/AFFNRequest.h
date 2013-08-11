@@ -37,7 +37,8 @@ typedef NS_ENUM(NSUInteger, AFFNPostType)
 
 - (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(NSDictionary *result))completion andFailBlock:(void (^)(NSError *error))failure;
 
-@property (readonly) float progress;
+@property (readonly) float progress;                    //A float between 0.0 and 1.0
+@property (nonatomic, assign) BOOL isConcurrent;        //Default is 'TRUE'
 @property (nonatomic, assign) NSTimeInterval timeoutInterval;
 @property (nonatomic, assign) NSURLCacheStoragePolicy storagePolicy;
 
