@@ -75,7 +75,8 @@ NSString *__AFFNKeyFinished = @"isFinished";
         finished = true;
         [self didChangeValueForKey:__AFFNKeyFinished];
 
-        _completion(nil);
+        //temp custom error code/string
+        _failure([NSError errorWithDomain:@"operation.cancelled" code:600 userInfo:nil]);
         return;
     }
     
