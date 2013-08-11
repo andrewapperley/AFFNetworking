@@ -12,6 +12,11 @@
 
 @synthesize totalRequestTime = _totalRequestTime, data = _data;
 
++ (id)callbackWithData:(NSData *)data andReqestTime:(double)requestTime
+{
+    return [[[self alloc] initWithData:data andReqestTime:requestTime] autorelease];
+}
+
 - (id)initWithData:(NSData *)data andReqestTime:(double)requestTime
 {
     self = [super init];

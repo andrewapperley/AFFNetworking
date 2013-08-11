@@ -36,10 +36,14 @@ typedef NS_ENUM(NSUInteger, AFFNPostType)
     void (^_failure)(NSError *error);
 }
 
++ (AFFNRequest *)requestWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailBlock:(void (^)(NSError *error))failure;
+
 - (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailBlock:(void (^)(NSError *error))failure;
 
 @property (readonly) float progress;                    //A float between 0.0 and 1.0
 @property (nonatomic, assign) BOOL isConcurrent;        //Default is 'TRUE'
+@property (nonatomic, readonly) BOOL isExecuting;
+@property (nonatomic, readonly) BOOL isFinished;
 @property (nonatomic, assign) NSTimeInterval timeoutInterval;
 @property (nonatomic, assign) NSURLCacheStoragePolicy storagePolicy;
 

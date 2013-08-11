@@ -10,9 +10,9 @@
 
 @interface AFFNCallbackObject : NSObject
 
-@property(readonly)double totalRequestTime;
-@property(readonly)NSData *data;
+@property (readonly) double totalRequestTime;
+@property (readonly) NSData *data;
 
-- (id)initWithData:(NSData *)data andReqestTime:(double)requestTime;
++ (id)callbackWithData:(NSData *)data andReqestTime:(double)requestTime;
 
 @end

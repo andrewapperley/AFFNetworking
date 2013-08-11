@@ -23,6 +23,12 @@ NSString *__AFFNKeyFinished = @"isFinished";
 @synthesize timeoutInterval = _timeoutInterval;
 @synthesize storagePolicy = _storagePolicy;
 
+#pragma mark - Init
++ (AFFNRequest *)requestWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailBlock:(void (^)(NSError *error))failure
+{
+    return [[[self alloc] initWithURL:urlString connectionType:type andParams:params withCompletion:completion andFailBlock:failure] autorelease];
+}
+
 - (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *))completion andFailBlock:(void (^)(NSError *))failure
 {
     self = [super init];
@@ -45,12 +51,23 @@ NSString *__AFFNKeyFinished = @"isFinished";
     return self;
 }
 
-- (BOOL)isConcurrent { return _isConcurrent; }
+#pragma mark - Properties
+- (BOOL)isConcurrent
+{
+    return _isConcurrent;
+}
 
-- (BOOL)isExecuting { return executing; }
+- (BOOL)isExecuting
+{
+    return executing;
+}
 
-- (BOOL)isFinished { return finished; }
+- (BOOL)isFinished
+{
+    return finished;
+}
 
+#pragma mark - Generate requests
 - (void)start
 {
     [self willChangeValueForKey:__AFFNKeyExecuting];
@@ -100,6 +117,7 @@ NSString *__AFFNKeyFinished = @"isFinished";
    
 }
 
+#pragma mark - Connection handling
 - (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
     _progress = (totalBytesWritten / totalBytesExpectedToWrite);
@@ -134,18 +152,16 @@ NSString *__AFFNKeyFinished = @"isFinished";
     
     NSTimeInterval totalRequestTime = [[NSDate date] timeIntervalSinceDate:requestTime];
    
-    AFFNCallbackObject *callBack = [[AFFNCallbackObject alloc] initWithData:receivedData andReqestTime:totalRequestTime];
+    AFFNCallbackObject *callBack = [AFFNCallbackObject callbackWithData:receivedData andReqestTime:totalRequestTime];
     
     _completion(callBack);
-    
-    [callBack release];
-    callBack = nil;
     
     [self willChangeValueForKey:__AFFNKeyFinished];
     finished = true;
     [self didChangeValueForKey:__AFFNKeyFinished];
 }
 
+#pragma mark - Dealloc
 - (void)dealloc
 {
     [_params release];
