@@ -12,6 +12,8 @@
 
 @synthesize totalRequestTime = _totalRequestTime, data = _data;
 
+//Callback object that holds data associated with the request and is sent through a completion block
+
 - (id)initWithData:(NSData *)data andReqestTime:(double)requestTime
 {
     self = [super init];

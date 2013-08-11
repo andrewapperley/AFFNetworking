@@ -18,6 +18,8 @@ static AFFNManager *sharedManager = nil;
 @synthesize networkOperations = _networkOperations;
 @synthesize cpuOperations = _cpuOperations;
 
+//Singleton sharedManager method
+
 + (AFFNManager *)sharedManager
 {
     if(sharedManager)
@@ -30,6 +32,8 @@ static AFFNManager *sharedManager = nil;
     
     return sharedManager;
 }
+
+//Add network bound operation to the queue, if the queue is nil then make it once. This is done on a global background queue
 
 - (void)addNetworkOperation:(AFFNRequest *)operation
 {
@@ -49,6 +53,8 @@ static AFFNManager *sharedManager = nil;
     });
 }
 
+//Add local bound operation to the queue, if the queue is nil then make it once. This is done on a global background queue
+
 - (void)addCpuOperation:(AFFNRequest *)operation
 {
     if(!_cpuOperations) {
@@ -59,6 +65,8 @@ static AFFNManager *sharedManager = nil;
     }
     
 }
+
+//Override methods to make the singleton class
 
 + (id)init
 {
