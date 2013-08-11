@@ -83,7 +83,11 @@ NSString *__AFFNKeyFinished = @"isFinished";
  * The main function of where the request creates the POST/GET request and the connection object, then starts the process.
  */
 - (void)start
-{
+{    
+    [self willChangeValueForKey:__AFFNKeyExecuting];
+    executing = TRUE;
+    [self didChangeValueForKey:__AFFNKeyExecuting];
+    
     if(self.isCancelled) {
         [self willChangeValueForKey:__AFFNKeyExecuting];
         executing = false;
@@ -97,10 +101,7 @@ NSString *__AFFNKeyFinished = @"isFinished";
         _failure([NSError errorWithDomain:@"operation.cancelled" code:600 userInfo:nil]);
         return;
     }
-    
-    [self willChangeValueForKey:__AFFNKeyExecuting];
-    executing = TRUE;
-    [self didChangeValueForKey:__AFFNKeyExecuting];
+
     
     [self performSelector:_type == kAFFNPost ? @selector(generatePOSTRequest) : @selector(generateGETRequest)];
     
