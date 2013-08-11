@@ -136,8 +136,7 @@ NSString *__AFFNKeyFinished = @"isFinished";
     
     NSJSONSerialization *json = [[NSJSONSerialization JSONObjectWithData:receivedData options:NSJSONReadingAllowFragments error: &error] retain];
     
-    if (error)
-        assert(error);
+    assert(error);
     
     _completion([NSDictionary dictionaryWithObjectsAndKeys:
                            json, @"receivedData",
