@@ -135,11 +135,26 @@ NSString *__AFFNKeyFinished = @"isFinished";
     
     [request setHTTPMethod:@"POST"];
     
-    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    NSData *jsonData = [NSData data];
     
-    //this part may be wrong, would have to look into or test
-    [request setValuesForKeysWithDictionary:_params];
+    NSError *error;
     
+    jsonData = [NSJSONSerialization dataWithJSONObject:_params options:NSJSONWritingPrettyPrinted error:&error];
+    
+    if(error)
+        assert(error);
+    
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
+    NSData *data = [NSData dataWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [jsonString release];
+    
+    [request setHTTPBody:data];
+    [request setValue:[NSString stringWithFormat:@"%d", data.length] forHTTPHeaderField:@"Content-Length"];
+    [request setValue:@"application/x-www-form-urlencoded charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
+   
 }
 
 //Generates a GET type request
@@ -172,7 +187,8 @@ NSString *__AFFNKeyFinished = @"isFinished";
     finished = true;
     [self didChangeValueForKey:__AFFNKeyFinished];
 
-    assert(error);
+    if(error)
+        assert(error);
 }
 
 //Sets the progress and data to 0 as a request/attempt has started
