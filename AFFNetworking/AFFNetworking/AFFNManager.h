@@ -10,14 +10,12 @@
 #import "AFFNRequest.h"
 
 @interface AFFNManager : NSObject
-{
-    @private
-}
 
 - (void)addNetworkOperation:(AFFNRequest *)operation;
 + (AFFNManager *)sharedManager;
 
-@property(atomic, readonly)NSOperationQueue *networkOperations;
-@property(atomic, readonly)NSOperationQueue *cpuOperations;
+@property (nonatomic, assign) NSUInteger maxAmountOfConcurrentOperations;   //Default is 4
+@property (nonatomic, readonly) NSOperationQueue *networkOperations;
+@property (nonatomic, readonly) NSOperationQueue *cpuOperations;
 
 @end

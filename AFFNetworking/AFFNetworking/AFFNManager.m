@@ -8,18 +8,53 @@
 
 #import "AFFNManager.h"
 
+#pragma mark - Macros
+#define LAST_NETWORK_OPERATION [_networkOperations.operations lastObject]
+
+#pragma mark - Constants
+const NSUInteger __AFFNManagerDefaultConcurrentQueueCount = 4;
 
 @implementation AFFNManager
-
-#define LAST_NETWORK_OPERATION [_networkOperations.operations lastObject]
 
 static AFFNManager *sharedManager = nil;
 
 @synthesize networkOperations = _networkOperations;
 @synthesize cpuOperations = _cpuOperations;
 
-//Singleton sharedManager method
+//Add network bound operation to the queue, if the queue is nil then make it once. This is done on a global background queue
+- (void)addNetworkOperation:(AFFNRequest *)operation
+{
+    if(!_networkOperations) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            _networkOperations = [NSOperationQueue new];
+            _networkOperations.maxConcurrentOperationCount = __AFFNManagerDefaultConcurrentQueueCount;
+        });
+    }
+    
+    if(LAST_NETWORK_OPERATION)
+        [operation addDependency:LAST_NETWORK_OPERATION];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
+        [_networkOperations addOperation:operation];
+    });
+}
 
+//Add local bound operation to the queue, if the queue is nil then make it once. This is done on a global background queue
+- (void)addCpuOperation:(AFFNRequest *)operation
+{
+    if(!_cpuOperations) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            _cpuOperations = [NSOperationQueue new];
+        });
+    }
+    
+}
+
+#pragma mark - Init
+
+//Singleton sharedManager method
 + (AFFNManager *)sharedManager
 {
     if(sharedManager)
@@ -33,41 +68,7 @@ static AFFNManager *sharedManager = nil;
     return sharedManager;
 }
 
-//Add network bound operation to the queue, if the queue is nil then make it once. This is done on a global background queue
-
-- (void)addNetworkOperation:(AFFNRequest *)operation
-{
-    if(!_networkOperations) {
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            _networkOperations = [NSOperationQueue new];
-            _networkOperations.maxConcurrentOperationCount = 4;
-        });
-    }
-    
-    if(LAST_NETWORK_OPERATION)
-        [operation addDependency:LAST_NETWORK_OPERATION];
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
-        [_networkOperations addOperation:operation];
-    });
-}
-
-//Add local bound operation to the queue, if the queue is nil then make it once. This is done on a global background queue
-
-- (void)addCpuOperation:(AFFNRequest *)operation
-{
-    if(!_cpuOperations) {
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            _cpuOperations = [NSOperationQueue new];
-        });
-    }
-    
-}
-
 //Override methods to make the singleton class
-
 + (id)init
 {
     return [self sharedManager];
@@ -91,6 +92,18 @@ static AFFNManager *sharedManager = nil;
 - (id)autorelease
 {
     return self;
+}
+
+#pragma mark - Properties
+- (void)setMaxAmountOfConcurrentOperations:(NSUInteger)maxAmountOfConcurrentOperations
+{
+    if(_networkOperations)
+        _networkOperations.maxConcurrentOperationCount = maxAmountOfConcurrentOperations;
+}
+
+- (NSUInteger)maxAmountOfConcurrentOperations
+{
+    return _networkOperations.maxConcurrentOperationCount;
 }
 
 @end
