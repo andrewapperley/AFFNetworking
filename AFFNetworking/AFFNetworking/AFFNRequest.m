@@ -162,7 +162,27 @@ NSString *__AFFNKeyFinished = @"isFinished";
 //Generates a GET type request
 - (void)generateGETRequest
 {
-   
+    //construct the url with the key/value pairs in the params
+    NSMutableString *paramsString = [[NSMutableString alloc] initWithString:_urlString];
+    [paramsString appendString:@"?"];
+
+    for (id key in _params) {
+        [paramsString appendFormat:@"%@=%@",key,[_params objectForKey:key]];
+    }
+
+    finalURL = [[NSURL alloc] initWithString:paramsString];
+    
+    [paramsString release];
+    paramsString = nil;
+    
+    request = [[NSMutableURLRequest alloc] initWithURL:finalURL cachePolicy:_storagePolicy timeoutInterval:_timeoutInterval];
+    
+    [request setHTTPMethod:@"GET"];
+
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:@"iOS" forHTTPHeaderField:@"User-Agent"];
+
 }
 
 #pragma mark - Connection handling

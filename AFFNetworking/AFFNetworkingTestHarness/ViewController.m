@@ -23,11 +23,18 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
        for (int i = 0; i < 20; i++) {
-        AFFNRequest *request = [AFFNRequest requestWithURL:@"http://api.openweathermap.org/data/2.5/find?q=London&type=like&mode=json" connectionType:kAFFNPost andParams:[NSDictionary dictionaryWithObjectsAndKeys:@"andrew",@"name", nil] withCompletion:^(AFFNCallbackObject *result) {
+        AFFNRequest *request = [AFFNRequest requestWithURL:@"http://localhost:8888/aff/request_dump.php" connectionType:kAFFNGet andParams:[NSDictionary dictionaryWithObjectsAndKeys:@"andrew",@"name", nil] withCompletion:^(AFFNCallbackObject *result) {
             
             NSLog(@"TOTAL TIME: %f",result.totalRequestTime);
             
-        } andFailBlock:nil ];
+            NSString *resultString = [[[NSString alloc] initWithData:result.data encoding:NSStringEncodingConversionAllowLossy] autorelease];
+            
+            NSLog(@"RESULT: %@",resultString);
+            
+            
+        } andFailBlock:^(NSError *error){
+            NSLog(@"ERROR: %@",error);
+        } ];
         
         [[AFFNManager sharedManager] addNetworkOperation:request];
     }
