@@ -32,32 +32,6 @@ const NSUInteger __AFFNManagerDefaultConcurrentQueueCount = 4;
 	return _sharedManager;
 }
 
-//Override methods to make the singleton class
-+ (id)init
-{
-    return [self sharedManager];
-}
-
-- (id)copyWithZone:(NSZone *)zone {
-    return self;
-}
-
-- (oneway void)release{}
-
-- (id)retain
-{
-    return self;
-}
-
-- (NSUInteger)retainCount {
-    return NSUIntegerMax;
-}
-
-- (id)autorelease
-{
-    return self;
-}
-
 #pragma mark - Networking methods
 //Add network bound operation to the queue, if the queue is nil then make it once. This is done on a global background queue
 - (void)addNetworkOperation:(AFFNRequest *)operation
