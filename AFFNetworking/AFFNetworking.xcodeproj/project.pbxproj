@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0F38C33417B1FFB300ACEBB4 /* AFFNManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F38C33317B1FFB300ACEBB4 /* AFFNManager.m */; };
 		0F85C08317B67BDD00922D58 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F85C08217B67BDD00922D58 /* UIKit.framework */; };
 		0F85C08417B67BDD00922D58 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F8F996E17B1C02A00671F6F /* Foundation.framework */; };
 		0F85C08617B67BDD00922D58 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F85C08517B67BDD00922D58 /* CoreGraphics.framework */; };
@@ -20,12 +19,13 @@
 		0F85C09B17B67BDD00922D58 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F85C09A17B67BDD00922D58 /* ViewController.m */; };
 		0F85C09E17B67BDD00922D58 /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F85C09C17B67BDD00922D58 /* ViewController_iPhone.xib */; };
 		0F85C0A117B67BDD00922D58 /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F85C09F17B67BDD00922D58 /* ViewController_iPad.xib */; };
-		0F85C0A517B67FFE00922D58 /* libAFFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F8F996B17B1C02A00671F6F /* libAFFNetworking.a */; };
-		0F85C0A817B73AE000922D58 /* AFFNCallbackObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F85C0A717B73AE000922D58 /* AFFNCallbackObject.m */; };
 		0F8F996F17B1C02A00671F6F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F8F996E17B1C02A00671F6F /* Foundation.framework */; };
-		0F8F997417B1C02A00671F6F /* AFFNetworking.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0F8F997317B1C02A00671F6F /* AFFNetworking.h */; };
-		0F8F997617B1C02A00671F6F /* AFFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8F997517B1C02A00671F6F /* AFFNetworking.m */; };
-		0F8F997E17B1E47C00671F6F /* AFFNRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F8F997D17B1E47C00671F6F /* AFFNRequest.m */; };
+		76DB151817BF37D900CE127E /* AFFNCallbackObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DB151117BF37D900CE127E /* AFFNCallbackObject.m */; };
+		76DB151917BF37D900CE127E /* AFFNCallbackObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DB151117BF37D900CE127E /* AFFNCallbackObject.m */; };
+		76DB151A17BF37D900CE127E /* AFFNManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DB151417BF37D900CE127E /* AFFNManager.m */; };
+		76DB151B17BF37D900CE127E /* AFFNManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DB151417BF37D900CE127E /* AFFNManager.m */; };
+		76DB151C17BF37D900CE127E /* AFFNRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DB151717BF37D900CE127E /* AFFNRequest.m */; };
+		76DB151D17BF37D900CE127E /* AFFNRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DB151717BF37D900CE127E /* AFFNRequest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,15 +35,12 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
-				0F8F997417B1C02A00671F6F /* AFFNetworking.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0F38C33217B1FFB300ACEBB4 /* AFFNManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFFNManager.h; sourceTree = "<group>"; };
-		0F38C33317B1FFB300ACEBB4 /* AFFNManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFFNManager.m; sourceTree = "<group>"; };
 		0F85C08117B67BDD00922D58 /* AFFNetworkingTestHarness.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AFFNetworkingTestHarness.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F85C08217B67BDD00922D58 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0F85C08517B67BDD00922D58 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -60,15 +57,15 @@
 		0F85C09A17B67BDD00922D58 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		0F85C09D17B67BDD00922D58 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPhone.xib; sourceTree = "<group>"; };
 		0F85C0A017B67BDD00922D58 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPad.xib; sourceTree = "<group>"; };
-		0F85C0A617B73AE000922D58 /* AFFNCallbackObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFFNCallbackObject.h; sourceTree = "<group>"; };
-		0F85C0A717B73AE000922D58 /* AFFNCallbackObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFFNCallbackObject.m; sourceTree = "<group>"; };
 		0F8F996B17B1C02A00671F6F /* libAFFNetworking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAFFNetworking.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F8F996E17B1C02A00671F6F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		0F8F997217B1C02A00671F6F /* AFFNetworking-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AFFNetworking-Prefix.pch"; sourceTree = "<group>"; };
-		0F8F997317B1C02A00671F6F /* AFFNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AFFNetworking.h; sourceTree = "<group>"; };
-		0F8F997517B1C02A00671F6F /* AFFNetworking.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AFFNetworking.m; sourceTree = "<group>"; };
-		0F8F997C17B1E47C00671F6F /* AFFNRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFFNRequest.h; sourceTree = "<group>"; };
-		0F8F997D17B1E47C00671F6F /* AFFNRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFFNRequest.m; sourceTree = "<group>"; };
+		76DB151017BF37D900CE127E /* AFFNCallbackObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFFNCallbackObject.h; sourceTree = "<group>"; };
+		76DB151117BF37D900CE127E /* AFFNCallbackObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFFNCallbackObject.m; sourceTree = "<group>"; };
+		76DB151317BF37D900CE127E /* AFFNManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFFNManager.h; sourceTree = "<group>"; };
+		76DB151417BF37D900CE127E /* AFFNManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFFNManager.m; sourceTree = "<group>"; };
+		76DB151617BF37D900CE127E /* AFFNRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFFNRequest.h; sourceTree = "<group>"; };
+		76DB151717BF37D900CE127E /* AFFNRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFFNRequest.m; sourceTree = "<group>"; };
+		76DB151E17BF38F700CE127E /* AFFNetworking-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFFNetworking-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,7 +73,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0F85C0A517B67FFE00922D58 /* libAFFNetworking.a in Frameworks */,
 				0F85C08317B67BDD00922D58 /* UIKit.framework in Frameworks */,
 				0F85C08417B67BDD00922D58 /* Foundation.framework in Frameworks */,
 				0F85C08617B67BDD00922D58 /* CoreGraphics.framework in Frameworks */,
@@ -99,11 +95,11 @@
 			children = (
 				0F85C09017B67BDD00922D58 /* AppDelegate.h */,
 				0F85C09117B67BDD00922D58 /* AppDelegate.m */,
+				0F85C08817B67BDD00922D58 /* Supporting Files */,
 				0F85C09917B67BDD00922D58 /* ViewController.h */,
 				0F85C09A17B67BDD00922D58 /* ViewController.m */,
-				0F85C09C17B67BDD00922D58 /* ViewController_iPhone.xib */,
 				0F85C09F17B67BDD00922D58 /* ViewController_iPad.xib */,
-				0F85C08817B67BDD00922D58 /* Supporting Files */,
+				0F85C09C17B67BDD00922D58 /* ViewController_iPhone.xib */,
 			);
 			path = AFFNetworkingTestHarness;
 			sourceTree = "<group>";
@@ -111,13 +107,14 @@
 		0F85C08817B67BDD00922D58 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				76DB151E17BF38F700CE127E /* AFFNetworking-Prefix.pch */,
 				0F85C08917B67BDD00922D58 /* AFFNetworkingTestHarness-Info.plist */,
-				0F85C08A17B67BDD00922D58 /* InfoPlist.strings */,
-				0F85C08D17B67BDD00922D58 /* main.m */,
 				0F85C08F17B67BDD00922D58 /* AFFNetworkingTestHarness-Prefix.pch */,
+				0F85C09717B67BDD00922D58 /* Default-568h@2x.png */,
 				0F85C09317B67BDD00922D58 /* Default.png */,
 				0F85C09517B67BDD00922D58 /* Default@2x.png */,
-				0F85C09717B67BDD00922D58 /* Default-568h@2x.png */,
+				0F85C08A17B67BDD00922D58 /* InfoPlist.strings */,
+				0F85C08D17B67BDD00922D58 /* main.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -125,7 +122,7 @@
 		0F8F996217B1C02A00671F6F = {
 			isa = PBXGroup;
 			children = (
-				0F8F997017B1C02A00671F6F /* AFFNetworking */,
+				76DB150E17BF37D900CE127E /* AFFNetworking */,
 				0F85C08717B67BDD00922D58 /* AFFNetworkingTestHarness */,
 				0F8F996D17B1C02A00671F6F /* Frameworks */,
 				0F8F996C17B1C02A00671F6F /* Products */,
@@ -151,28 +148,41 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		0F8F997017B1C02A00671F6F /* AFFNetworking */ = {
+		76DB150E17BF37D900CE127E /* AFFNetworking */ = {
 			isa = PBXGroup;
 			children = (
-				0F8F997317B1C02A00671F6F /* AFFNetworking.h */,
-				0F8F997517B1C02A00671F6F /* AFFNetworking.m */,
-				0F8F997117B1C02A00671F6F /* Supporting Files */,
-				0F8F997C17B1E47C00671F6F /* AFFNRequest.h */,
-				0F8F997D17B1E47C00671F6F /* AFFNRequest.m */,
-				0F38C33217B1FFB300ACEBB4 /* AFFNManager.h */,
-				0F38C33317B1FFB300ACEBB4 /* AFFNManager.m */,
-				0F85C0A617B73AE000922D58 /* AFFNCallbackObject.h */,
-				0F85C0A717B73AE000922D58 /* AFFNCallbackObject.m */,
+				76DB150F17BF37D900CE127E /* AFFNCallbackObject */,
+				76DB151217BF37D900CE127E /* AFFNManager */,
+				76DB151517BF37D900CE127E /* AFFNRequest */,
 			);
 			path = AFFNetworking;
 			sourceTree = "<group>";
 		};
-		0F8F997117B1C02A00671F6F /* Supporting Files */ = {
+		76DB150F17BF37D900CE127E /* AFFNCallbackObject */ = {
 			isa = PBXGroup;
 			children = (
-				0F8F997217B1C02A00671F6F /* AFFNetworking-Prefix.pch */,
+				76DB151017BF37D900CE127E /* AFFNCallbackObject.h */,
+				76DB151117BF37D900CE127E /* AFFNCallbackObject.m */,
 			);
-			name = "Supporting Files";
+			path = AFFNCallbackObject;
+			sourceTree = "<group>";
+		};
+		76DB151217BF37D900CE127E /* AFFNManager */ = {
+			isa = PBXGroup;
+			children = (
+				76DB151317BF37D900CE127E /* AFFNManager.h */,
+				76DB151417BF37D900CE127E /* AFFNManager.m */,
+			);
+			path = AFFNManager;
+			sourceTree = "<group>";
+		};
+		76DB151517BF37D900CE127E /* AFFNRequest */ = {
+			isa = PBXGroup;
+			children = (
+				76DB151617BF37D900CE127E /* AFFNRequest.h */,
+				76DB151717BF37D900CE127E /* AFFNRequest.m */,
+			);
+			path = AFFNRequest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,6 +273,9 @@
 				0F85C08E17B67BDD00922D58 /* main.m in Sources */,
 				0F85C09217B67BDD00922D58 /* AppDelegate.m in Sources */,
 				0F85C09B17B67BDD00922D58 /* ViewController.m in Sources */,
+				76DB151917BF37D900CE127E /* AFFNCallbackObject.m in Sources */,
+				76DB151B17BF37D900CE127E /* AFFNManager.m in Sources */,
+				76DB151D17BF37D900CE127E /* AFFNRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,10 +283,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0F8F997617B1C02A00671F6F /* AFFNetworking.m in Sources */,
-				0F8F997E17B1E47C00671F6F /* AFFNRequest.m in Sources */,
-				0F38C33417B1FFB300ACEBB4 /* AFFNManager.m in Sources */,
-				0F85C0A817B73AE000922D58 /* AFFNCallbackObject.m in Sources */,
+				76DB151817BF37D900CE127E /* AFFNCallbackObject.m in Sources */,
+				76DB151A17BF37D900CE127E /* AFFNManager.m in Sources */,
+				76DB151C17BF37D900CE127E /* AFFNRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

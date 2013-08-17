@@ -7,7 +7,6 @@
 //
 
 #import "AFFNRequest.h"
-#import "AFFNManager.h"
 
 #pragma mark - Constants
 const NSTimeInterval __AFFNDefaultTimeout = 120;
