@@ -6,13 +6,13 @@
 //  Copyright (c) 2013 AFApps. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface AFFNCallbackObject : NSObject
 
-@property (readonly) double totalRequestTime;
-@property (readonly) NSData *data;
+@property (nonatomic, readonly) CGFloat totalRequestTime;
+@property (nonatomic, readonly) NSData *data;
 
-+ (id)callbackWithData:(NSData *)data andReqestTime:(double)requestTime;
++ (id)callbackWithData:(NSData *)data andReqestTime:(CGFloat)requestTime;
 
 @end

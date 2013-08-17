@@ -9,16 +9,16 @@
 #import "AFFNCallbackObject.h"
 
 @implementation AFFNCallbackObject
-
-@synthesize totalRequestTime = _totalRequestTime, data = _data;
+@synthesize totalRequestTime = _totalRequestTime;
+@synthesize data = _data;
 
 //Callback object that holds data associated with the request and is sent through a completion block
-+ (id)callbackWithData:(NSData *)data andReqestTime:(double)requestTime
++ (id)callbackWithData:(NSData *)data andReqestTime:(CGFloat)requestTime
 {
     return [[[self alloc] initWithData:data andReqestTime:requestTime] autorelease];
 }
 
-- (id)initWithData:(NSData *)data andReqestTime:(double)requestTime
+- (id)initWithData:(NSData *)data andReqestTime:(CGFloat)requestTime
 {
     self = [super init];
     if(self)

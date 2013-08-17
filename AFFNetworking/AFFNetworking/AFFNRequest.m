@@ -8,7 +8,6 @@
 
 #import "AFFNRequest.h"
 #import "AFFNManager.h"
-#import <UIKit/UIImage.h>
 
 #pragma mark - Constants
 const NSTimeInterval __AFFNDefaultTimeout = 120;
@@ -19,12 +18,13 @@ NSString *__AFFNKeyExecuting = @"isExecuting";
 NSString *__AFFNKeyFinished = @"isFinished";
 
 @implementation AFFNRequest
-
+@synthesize multipartData = _multipartData;
+@synthesize multiSeparator = _multiSeparator;
 @synthesize isConcurrent = _isConcurrent;
+@synthesize isExecuting = _isExecuting;
+@synthesize isFinished = _isFinished;
 @synthesize timeoutInterval = _timeoutInterval;
 @synthesize storagePolicy = _storagePolicy;
-@synthesize multiSeparator = _multiSeparator;
-@synthesize multipartData = _multipartData;
 
 #pragma mark - Init
 
@@ -33,54 +33,57 @@ NSString *__AFFNKeyFinished = @"isFinished";
  * in the request in NSDictionary format, and a completion/fail block for a callback.
  *
  */
-+ (AFFNRequest *)requestWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailBlock:(void (^)(NSError *error))failure andUpProgressBlock:(void (^)(float __upProgress))upProgressBlock andDProgressBlock:(void (^)(float))downProgressBlock
++ (AFFNRequest *)requestWithConnectionType:(AFFNPostType)type andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *))completion andFailure:(void (^)(NSError *))failure
 {
-    return [[[self alloc] initWithURL:urlString connectionType:type andParams:params withCompletion:completion andFailBlock:failure andUpProgressBlock:upProgressBlock andDProgressBlock:downProgressBlock] autorelease];
+    return [[[self alloc] initWithConnectionType:type andURL:urlString andParams:params withCompletion:completion andFailure:failure andUploadProgressBlock:nil andDownloadProgressBlock:nil] autorelease];
 }
 
-- (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *))completion andFailBlock:(void (^)(NSError *))failure andUpProgressBlock:(void (^)(float))upProgressBlock andDProgressBlock:(void (^)(float))downProgressBlock
++ (AFFNRequest *)requestWithConnectionType:(AFFNPostType)type andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *))completion andFailure:(void (^)(NSError *))failure andUploadProgressBlock:(void (^)(CGFloat))uploadProgressBlock andDownloadProgressBlock:(void (^)(float))downloadProgressBlock
+{
+    return [[[self alloc] initWithConnectionType:type andURL:urlString andParams:params withCompletion:completion andFailure:failure andUploadProgressBlock:uploadProgressBlock andDownloadProgressBlock:downloadProgressBlock] autorelease];
+}
+
+- (AFFNRequest *)initWithConnectionType:(AFFNPostType)type andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *))completion andFailure:(void (^)(NSError *))failure
+{
+    return [self initWithConnectionType:type andURL:urlString andParams:params withCompletion:completion andFailure:failure andUploadProgressBlock:nil andDownloadProgressBlock:nil];
+}
+
+- (AFFNRequest *)initWithConnectionType:(AFFNPostType)type andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *))completion andFailure:(void (^)(NSError *))failure andUploadProgressBlock:(void (^)(CGFloat))uploadProgressBlock andDownloadProgressBlock:(void (^)(float))downloadProgressBlock
 {
     self = [super init];
     if(self)
     {
-        executing = FALSE;
-        finished = FALSE;
-        
+        //Set defaults
+        _isExecuting = FALSE;
+        _isFinished = FALSE;
         _isConcurrent = TRUE;
         _timeoutInterval = __AFFNDefaultTimeout;
         _storagePolicy = __AFFNDefaultStoragePolicy;
         _multiSeparator = (NSString *)__AFFNDefaultMultiSeparator;
         
-        _params = [params copy];
-        _urlString = [urlString copy];
+        //Set parameters
         _type = type;
-        _completion = [completion copy];
-        _failure = [failure copy];
-        _upProgress = [upProgressBlock copy];
-        _downProgress = [downProgressBlock copy];
+
+        if(urlString)
+            _urlString = [urlString copy];
+                
+        if(params)
+            _params = [params copy];
+        
+        if(completion)
+            _completionBlock = [completion copy];
+        
+        if(failure)
+            _failureBlock = [failure copy];
+        
+        if(uploadProgressBlock)
+            _upProgressBlock = [uploadProgressBlock copy];
+        
+        if(downloadProgressBlock)
+            _downProgressBlock = [downloadProgressBlock copy];
     }
     
     return self;
-}
-
-#pragma mark - Properties
-
-/*
- * BOOL returning functions that return the state of the request
- */
-- (BOOL)isConcurrent
-{
-    return _isConcurrent;
-}
-
-- (BOOL)isExecuting
-{
-    return executing;
-}
-
-- (BOOL)isFinished
-{
-    return finished;
 }
 
 #pragma mark - Generate requests
@@ -91,23 +94,22 @@ NSString *__AFFNKeyFinished = @"isFinished";
 - (void)start
 {    
     [self willChangeValueForKey:__AFFNKeyExecuting];
-    executing = TRUE;
+    _isExecuting = TRUE;
     [self didChangeValueForKey:__AFFNKeyExecuting];
     
     if(self.isCancelled) {
         [self willChangeValueForKey:__AFFNKeyExecuting];
-        executing = false;
+        _isExecuting = FALSE;
         [self didChangeValueForKey:__AFFNKeyExecuting];
         
         [self willChangeValueForKey:__AFFNKeyFinished];
-        finished = true;
+        _isFinished = TRUE;
         [self didChangeValueForKey:__AFFNKeyFinished];
         
-        //temp custom error code/string
-        _failure([NSError errorWithDomain:@"operation.cancelled" code:600 userInfo:nil]);
+        //TODO : temp custom error code/string
+        _failureBlock([NSError errorWithDomain:@"operation.cancelled" code:600 userInfo:nil]);
         return;
     }
-
     
     [self performSelector:_type == (kAFFNPost | kAFFNMulti) ? @selector(generatePOSTRequest) : @selector(generateGETRequest)];
     
@@ -120,8 +122,7 @@ NSString *__AFFNKeyFinished = @"isFinished";
                                forMode:NSDefaultRunLoopMode];
         [_connection start];
         
-        
-        requestTime = [[NSDate date] retain];
+        requestTime = [NSDate new];
         
         [finalURL release];
         finalURL = nil;
@@ -134,7 +135,6 @@ NSString *__AFFNKeyFinished = @"isFinished";
 //Generates a POST type request
 - (void)generatePOSTRequest
 {
-    
     finalURL = [[NSURL alloc] initWithString:_urlString];
     
     request = [[NSMutableURLRequest alloc] initWithURL:finalURL cachePolicy:_storagePolicy timeoutInterval:_timeoutInterval];
@@ -163,9 +163,7 @@ NSString *__AFFNKeyFinished = @"isFinished";
     [data appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"params\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
 
     [data appendData:[NSData dataWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding]]];
-    
-    
-    
+        
     [jsonString release];
     
     if(_type == kAFFNMulti) {
@@ -178,7 +176,6 @@ NSString *__AFFNKeyFinished = @"isFinished";
     
     [data release];
     data = nil;
-   
 }
 
 //Generates a Multi POST type request
@@ -200,14 +197,13 @@ NSString *__AFFNKeyFinished = @"isFinished";
             [data appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
         } else {
             @throw [NSException
-                    exceptionWithName:@"File Format Exception"
+                    exceptionWithName:@"AFFNRequestTypeException"
                     reason:@"NSData or NSString only"
                     userInfo:nil];
         }
     }
     
     return data;
-    
 }
 
 //Generates a GET type request
@@ -233,7 +229,6 @@ NSString *__AFFNKeyFinished = @"isFinished";
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"iOS" forHTTPHeaderField:@"User-Agent"];
-
 }
 
 #pragma mark - Connection handling
@@ -244,10 +239,10 @@ NSString *__AFFNKeyFinished = @"isFinished";
     if(_upDone)
         return;
     
-    if(MAX(1, ((float)totalBytesWritten / (float)totalBytesExpectedToWrite)) >= 1)
-        _upDone = true;
+    if(MAX(1, ((CGFloat)totalBytesWritten / (CGFloat)totalBytesExpectedToWrite)) >= 1)
+        _upDone = TRUE;
     
-    _upProgress(MAX(1, ((float)totalBytesWritten / (float)totalBytesExpectedToWrite)));
+    _upProgressBlock(MAX(1, ((CGFloat)totalBytesWritten / (CGFloat)totalBytesExpectedToWrite)));
 }
 
 //Failure of the connection, returns the error through the failure block
@@ -256,14 +251,14 @@ NSString *__AFFNKeyFinished = @"isFinished";
     [_connection release];
     _connection = nil;
     
-    _failure(error);
+    _failureBlock(error);
     
     [self willChangeValueForKey:__AFFNKeyExecuting];
-    executing = false;
+    _isExecuting = FALSE;
     [self didChangeValueForKey:__AFFNKeyExecuting];
 
     [self willChangeValueForKey:__AFFNKeyFinished];
-    finished = true;
+    _isFinished = TRUE;
     [self didChangeValueForKey:__AFFNKeyFinished];
 
     if(error)
@@ -276,7 +271,7 @@ NSString *__AFFNKeyFinished = @"isFinished";
     [receivedData setLength:0];
     downloadDataLength = 0;
     expectedDataLength = response.expectedContentLength;
-    _downDone = false;
+    _downDone = FALSE;
 }
 
 //Appends data to the data object
@@ -289,9 +284,9 @@ NSString *__AFFNKeyFinished = @"isFinished";
         return;
     
     if(MAX(1, (downloadDataLength / expectedDataLength)) >= 1)
-        _downDone = true;
+        _downDone = TRUE;
     
-    _downProgress(MAX(1, (downloadDataLength / expectedDataLength)));
+    _downProgressBlock(MAX(1, (downloadDataLength / expectedDataLength)));
     
 }
 
@@ -305,14 +300,14 @@ NSString *__AFFNKeyFinished = @"isFinished";
     
     AFFNCallbackObject *callBack = [AFFNCallbackObject callbackWithData:receivedData andReqestTime:totalRequestTime];
     
-    _completion(callBack);
+    _completionBlock(callBack);
         
     [self willChangeValueForKey:__AFFNKeyExecuting];
-    executing = false;
+    _isExecuting = FALSE;
     [self didChangeValueForKey:__AFFNKeyExecuting];
     
     [self willChangeValueForKey:__AFFNKeyFinished];
-    finished = true;
+    _isFinished = TRUE;
     [self didChangeValueForKey:__AFFNKeyFinished];
 }
 
@@ -321,45 +316,53 @@ NSString *__AFFNKeyFinished = @"isFinished";
 //Clean up memory
 - (void)dealloc
 {
-    [_params release];
+    if(_params)
+        [_params release];
     _params = nil;
     
-    [_urlString release];
+    if(_urlString)
+        [_urlString release];
     _urlString = nil;
     
-    [finalURL release];
+    if(finalURL)
+        [finalURL release];
     finalURL = nil;
     
-    [request release];
+    if(request)
+        [request release];
     request = nil;
     
-    if(_connection){
+    if(_connection)
         [_connection release];
-        _connection = nil;
-    }
+    _connection = nil;
     
-    [_completion release];
-    _completion = nil;
+    if(_completionBlock)
+        [_completionBlock release];
+    _completionBlock = nil;
     
-    [_failure release];
-    _failure = nil;
+    if(_failureBlock)
+        [_failureBlock release];
+    _failureBlock = nil;
     
-    [_upProgress release];
-    _upProgress = nil;
+    if(_upProgressBlock)
+        [_upProgressBlock release];
+    _upProgressBlock = nil;
     
-    [_downProgress release];
-    _downProgress = nil;
+    if(_downProgressBlock)
+        [_downProgressBlock release];
+    _downProgressBlock = nil;
     
-    [requestTime release];
+    if(requestTime)
+        [requestTime release];
     requestTime = nil;
     
-    [_multipartData release];
+    if(_multipartData)
+        [_multipartData release];
     _multipartData = nil;
     
-    if(receivedData){
+    if(receivedData)
         [receivedData release];
-        receivedData = nil;
-    }
+    receivedData = nil;
     
     [super dealloc];
 }
