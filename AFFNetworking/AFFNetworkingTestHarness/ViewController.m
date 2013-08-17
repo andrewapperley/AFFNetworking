@@ -21,9 +21,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    
-       for (int i = 0; i < 20; i++) {
-        AFFNRequest *request = [AFFNRequest requestWithURL:@"http://localhost:8888/aff/request_dump.php" connectionType:kAFFNGet andParams:[NSDictionary dictionaryWithObjectsAndKeys:@"andrew",@"name", nil] withCompletion:^(AFFNCallbackObject *result) {
+        AFFNRequest *request = [AFFNRequest requestWithURL:@"http://localhost:8888/aff/request_dump.php" connectionType:kAFFNPost andParams:[NSDictionary dictionaryWithObjectsAndKeys:@"Andrew",@"name", nil] withCompletion:^(AFFNCallbackObject *result) {
             
             NSLog(@"TOTAL TIME: %f",result.totalRequestTime);
             
@@ -34,10 +32,13 @@
             
         } andFailBlock:^(NSError *error){
             NSLog(@"ERROR: %@",error);
+        } andUpProgressBlock:^(float progress){
+            NSLog(@"%f",progress);
+        } andDProgressBlock:^(float progress){
+            NSLog(@"%f",progress);
         } ];
         
         [[AFFNManager sharedManager] addNetworkOperation:request];
-    }
 }
 
 - (void)didReceiveMemoryWarning

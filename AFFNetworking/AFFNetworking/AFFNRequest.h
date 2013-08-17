@@ -12,7 +12,8 @@
 typedef NS_ENUM(NSUInteger, AFFNPostType)
 {
     kAFFNPost,
-    kAFFNGet
+    kAFFNGet,
+    kAFFMulti
 };
 
 @interface AFFNRequest : NSOperation <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
@@ -29,18 +30,23 @@ typedef NS_ENUM(NSUInteger, AFFNPostType)
     NSMutableData *receivedData;
     NSDate *requestTime;
     
+    /*Downloading progress*/
+    float expectedDataLength;
+    float downloadDataLength;
+    
     BOOL executing;
     BOOL finished;
     
     void (^_completion)(AFFNCallbackObject *result);
+    void (^_upProgress)(float __upProgress);
+    void (^_downProgress)(float __downProgress);
     void (^_failure)(NSError *error);
 }
 
-+ (AFFNRequest *)requestWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailBlock:(void (^)(NSError *error))failure;
++ (AFFNRequest *)requestWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailBlock:(void (^)(NSError *error))failure andUpProgressBlock:(void (^)(float __upProgress))upProgressBlock andDProgressBlock:(void (^)(float))downProgressBlock;
 
-- (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailBlock:(void (^)(NSError *error))failure;
+- (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailBlock:(void (^)(NSError *error))failure andUpProgressBlock:(void (^)(float __upProgress))upProgressBlock andDProgressBlock:(void (^)(float))downProgressBlock;
 
-@property (readonly) float progress;                    //A float between 0.0 and 1.0
 @property (nonatomic, assign) BOOL isConcurrent;        //Default is 'TRUE'
 @property (nonatomic, readonly) BOOL isExecuting;
 @property (nonatomic, readonly) BOOL isFinished;

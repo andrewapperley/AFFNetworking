@@ -18,7 +18,6 @@ NSString *__AFFNKeyFinished = @"isFinished";
 
 @implementation AFFNRequest
 
-@synthesize progress = _progress;
 @synthesize isConcurrent = _isConcurrent;
 @synthesize timeoutInterval = _timeoutInterval;
 @synthesize storagePolicy = _storagePolicy;
@@ -30,12 +29,12 @@ NSString *__AFFNKeyFinished = @"isFinished";
  * in the request in NSDictionary format, and a completion/fail block for a callback.
  *
  */
-+ (AFFNRequest *)requestWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailBlock:(void (^)(NSError *error))failure
++ (AFFNRequest *)requestWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailBlock:(void (^)(NSError *error))failure andUpProgressBlock:(void (^)(float __upProgress))upProgressBlock andDProgressBlock:(void (^)(float))downProgressBlock
 {
-    return [[[self alloc] initWithURL:urlString connectionType:type andParams:params withCompletion:completion andFailBlock:failure] autorelease];
+    return [[[self alloc] initWithURL:urlString connectionType:type andParams:params withCompletion:completion andFailBlock:failure andUpProgressBlock:upProgressBlock andDProgressBlock:downProgressBlock] autorelease];
 }
 
-- (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *))completion andFailBlock:(void (^)(NSError *))failure
+- (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *))completion andFailBlock:(void (^)(NSError *))failure andUpProgressBlock:(void (^)(float))upProgressBlock andDProgressBlock:(void (^)(float))downProgressBlock
 {
     self = [super init];
     if(self)
@@ -52,6 +51,8 @@ NSString *__AFFNKeyFinished = @"isFinished";
         _type = type;
         _completion = [completion copy];
         _failure = [failure copy];
+        _upProgress = [upProgressBlock copy];
+        _downProgress = [downProgressBlock copy];
     }
     
     return self;
@@ -190,7 +191,7 @@ NSString *__AFFNKeyFinished = @"isFinished";
 //Calculates the progress of the request
 - (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
-    _progress = (totalBytesWritten / totalBytesExpectedToWrite);
+    _upProgress(MAX(1, ((float)totalBytesWritten / (float)totalBytesExpectedToWrite)));
 }
 
 //Failure of the connection, returns the error through the failure block
@@ -217,14 +218,19 @@ NSString *__AFFNKeyFinished = @"isFinished";
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
     [receivedData setLength:0];
-    _progress = 0;
+    downloadDataLength = 0;
+    expectedDataLength = response.expectedContentLength;
     
 }
 
 //Appends data to the data object
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
+    downloadDataLength += data.length;
     [receivedData appendData:data];
+    
+    _downProgress(MAX(1, (downloadDataLength / expectedDataLength)));
+    
 }
 
 //Successful request function. Returns the total request time and data to the completion block in a AFFNCallbackObject
@@ -275,6 +281,12 @@ NSString *__AFFNKeyFinished = @"isFinished";
     
     [_failure release];
     _failure = nil;
+    
+    [_upProgress release];
+    _upProgress = nil;
+    
+    [_downProgress release];
+    _downProgress = nil;
     
     [requestTime release];
     requestTime = nil;
