@@ -11,13 +11,12 @@
 #pragma mark - Constants
 const NSTimeInterval __AFFNDefaultTimeout = 120;
 const NSURLCacheStoragePolicy __AFFNDefaultStoragePolicy = NSURLCacheStorageAllowedInMemoryOnly;
-const NSString *__AFFNDefaultMultiSeparator = @"_AFFNBoundary_";
+const NSString *__AFFNDefaultMultiSeparator = @"---------------------_AFFNBoundary_";
 
 NSString *__AFFNKeyExecuting = @"isExecuting";
 NSString *__AFFNKeyFinished = @"isFinished";
 
 @implementation AFFNRequest
-@synthesize multipartData = _multipartData;
 @synthesize multiSeparator = _multiSeparator;
 @synthesize isConcurrent = _isConcurrent;
 @synthesize isExecuting = _isExecuting;
@@ -34,20 +33,25 @@ NSString *__AFFNKeyFinished = @"isFinished";
  */
 + (AFFNRequest *)requestWithConnectionType:(AFFNPostType)type andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *))completion andFailure:(void (^)(NSError *))failure
 {
-    return [[[self alloc] initWithConnectionType:type andURL:urlString andParams:params withCompletion:completion andFailure:failure andUploadProgressBlock:nil andDownloadProgressBlock:nil] autorelease];
+    return [[[self alloc] initWithConnectionType:type andURL:urlString andParams:params withCompletion:completion andFailure:failure andUploadProgressBlock:nil andDownloadProgressBlock:nil andMultiData:nil] autorelease];
 }
 
 + (AFFNRequest *)requestWithConnectionType:(AFFNPostType)type andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *))completion andFailure:(void (^)(NSError *))failure andUploadProgressBlock:(void (^)(CGFloat))uploadProgressBlock andDownloadProgressBlock:(void (^)(float))downloadProgressBlock
 {
-    return [[[self alloc] initWithConnectionType:type andURL:urlString andParams:params withCompletion:completion andFailure:failure andUploadProgressBlock:uploadProgressBlock andDownloadProgressBlock:downloadProgressBlock] autorelease];
+    return [[[self alloc] initWithConnectionType:type andURL:urlString andParams:params withCompletion:completion andFailure:failure andUploadProgressBlock:uploadProgressBlock andDownloadProgressBlock:downloadProgressBlock andMultiData:nil] autorelease];
+}
+
++ (AFFNRequest *)requestWithConnectionType:(AFFNPostType)type andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *))completion andFailure:(void (^)(NSError *))failure andUploadProgressBlock:(void (^)(CGFloat))uploadProgressBlock andDownloadProgressBlock:(void (^)(float))downloadProgressBlock andMultiData:(NSArray *)multiData
+{
+    return [[[self alloc] initWithConnectionType:type andURL:urlString andParams:params withCompletion:completion andFailure:failure andUploadProgressBlock:uploadProgressBlock andDownloadProgressBlock:downloadProgressBlock andMultiData:multiData] autorelease];
 }
 
 - (AFFNRequest *)initWithConnectionType:(AFFNPostType)type andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *))completion andFailure:(void (^)(NSError *))failure
 {
-    return [self initWithConnectionType:type andURL:urlString andParams:params withCompletion:completion andFailure:failure andUploadProgressBlock:nil andDownloadProgressBlock:nil];
+    return [self initWithConnectionType:type andURL:urlString andParams:params withCompletion:completion andFailure:failure andUploadProgressBlock:nil andDownloadProgressBlock:nil andMultiData:nil];
 }
 
-- (AFFNRequest *)initWithConnectionType:(AFFNPostType)type andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *))completion andFailure:(void (^)(NSError *))failure andUploadProgressBlock:(void (^)(CGFloat))uploadProgressBlock andDownloadProgressBlock:(void (^)(float))downloadProgressBlock
+- (AFFNRequest *)initWithConnectionType:(AFFNPostType)type andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *))completion andFailure:(void (^)(NSError *))failure andUploadProgressBlock:(void (^)(CGFloat))uploadProgressBlock andDownloadProgressBlock:(void (^)(float))downloadProgressBlock andMultiData:(NSArray *)multiData
 {
     self = [super init];
     if(self)
@@ -68,6 +72,9 @@ NSString *__AFFNKeyFinished = @"isFinished";
                 
         if(params)
             _params = [params copy];
+        
+        if(multiData)
+            _multipartData = [multiData copy];
         
         if(completion)
             _completionBlock = [completion copy];
@@ -238,7 +245,7 @@ NSString *__AFFNKeyFinished = @"isFinished";
 //Calculates the progress of the request
 - (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
-    if(_upDone)
+    if(_upDone || !_upProgressBlock)
         return;
     
     if( ((CGFloat)totalBytesWritten / (CGFloat)totalBytesExpectedToWrite) >= 1)
@@ -253,7 +260,8 @@ NSString *__AFFNKeyFinished = @"isFinished";
     [_connection release];
     _connection = nil;
     
-    _failureBlock(error);
+    if(_failureBlock)
+        _failureBlock(error);
     
     [self willChangeValueForKey:__AFFNKeyExecuting];
     _isExecuting = FALSE;
@@ -282,7 +290,7 @@ NSString *__AFFNKeyFinished = @"isFinished";
     downloadDataLength += data.length;
     [receivedData appendData:data];
     
-    if(_downDone)
+    if(_downDone || _downProgressBlock)
         return;
     
     if((downloadDataLength / expectedDataLength) >= 1)
@@ -302,7 +310,8 @@ NSString *__AFFNKeyFinished = @"isFinished";
     
     AFFNCallbackObject *callBack = [AFFNCallbackObject callbackWithData:receivedData andReqestTime:totalRequestTime];
     
-    _completionBlock(callBack);
+    if(_completionBlock)
+        _completionBlock(callBack);
         
     [self willChangeValueForKey:__AFFNKeyExecuting];
     _isExecuting = FALSE;

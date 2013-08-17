@@ -43,8 +43,8 @@ const NSUInteger __AFFNManagerDefaultConcurrentQueueCount = 4;
         _networkOperations.maxConcurrentOperationCount = __AFFNManagerDefaultConcurrentQueueCount;
     });
     
-    if(LAST_NETWORK_OPERATION)
-        [operation addDependency:LAST_NETWORK_OPERATION];
+//    if(LAST_NETWORK_OPERATION)
+//        [operation addDependency:LAST_NETWORK_OPERATION];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(){
         [_networkOperations addOperation:operation];

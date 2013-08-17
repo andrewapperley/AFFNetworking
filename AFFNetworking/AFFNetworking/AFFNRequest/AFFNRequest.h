@@ -20,6 +20,7 @@ typedef NS_ENUM(NSUInteger, AFFNPostType)
 {
     @private
     NSDictionary *_params;
+    NSArray *_multipartData;
     NSString *_urlString;
     AFFNPostType _type;
     NSURLConnection *_connection;
@@ -46,11 +47,12 @@ typedef NS_ENUM(NSUInteger, AFFNPostType)
 
 + (AFFNRequest *)requestWithConnectionType:(AFFNPostType)type andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailure:(void (^)(NSError *error))failure;
 + (AFFNRequest *)requestWithConnectionType:(AFFNPostType)type andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailure:(void (^)(NSError *error))failure andUploadProgressBlock:(void (^)(CGFloat uploadProgress))uploadProgressBlock andDownloadProgressBlock:(void (^)(CGFloat downloadProgress))downloadProgressBlock;
++ (AFFNRequest *)requestWithConnectionType:(AFFNPostType)type andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *))completion andFailure:(void (^)(NSError *))failure andUploadProgressBlock:(void (^)(CGFloat))uploadProgressBlock andDownloadProgressBlock:(void (^)(float))downloadProgressBlock andMultiData:(NSArray *)multiData;
+
 
 - (AFFNRequest *)initWithConnectionType:(AFFNPostType)type andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailure:(void (^)(NSError *error))failure;
-- (AFFNRequest *)initWithConnectionType:(AFFNPostType)type andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailure:(void (^)(NSError *error))failure andUploadProgressBlock:(void (^)(CGFloat uploadProgress))uploadProgressBlock andDownloadProgressBlock:(void (^)(CGFloat downloadProgress))downloadProgressBlock;
+- (AFFNRequest *)initWithConnectionType:(AFFNPostType)type andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *))completion andFailure:(void (^)(NSError *))failure andUploadProgressBlock:(void (^)(CGFloat))uploadProgressBlock andDownloadProgressBlock:(void (^)(float))downloadProgressBlock andMultiData:(NSArray *)multiData;
 
-@property (nonatomic, retain) NSArray *multipartData;
 @property (nonatomic, assign) NSString *multiSeparator; //This is used for separating multi request data
 @property (nonatomic, assign) BOOL isConcurrent;        //Default is 'TRUE'
 @property (nonatomic, readonly) BOOL isExecuting;
