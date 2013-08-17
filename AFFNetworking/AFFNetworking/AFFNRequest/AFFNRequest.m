@@ -181,8 +181,9 @@ NSString *__AFFNKeyFinished = @"isFinished";
 - (NSMutableData *)generateMultiRequestWithData:(NSMutableData *)data
 {
     [request addValue:[NSString stringWithFormat:@"multipart/form-data; boundary=%@", _multiSeparator] forHTTPHeaderField:@"Content-Type"];
-    
+    int i = 0;
     for (id item in _multipartData) {
+        i++;
         if([item isKindOfClass:[NSString class]])
         {
             [data appendData:[[NSString stringWithFormat:@"--%@\r\n", _multiSeparator] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -191,7 +192,8 @@ NSString *__AFFNKeyFinished = @"isFinished";
         } else if([item isKindOfClass:[NSData class]])
         {
             [data appendData:[[NSString stringWithFormat:@"--%@\r\n", _multiSeparator] dataUsingEncoding:NSUTF8StringEncoding]];
-            [data appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", [NSString stringWithFormat:@"%@-%d-%d",[((NSData *)item).description substringWithRange:NSMakeRange(1, 8)], ((NSData *)item).hash, (rand() % 1000 + 1) ]] dataUsingEncoding:NSUTF8StringEncoding]];
+            [data appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"data-%d\"\r\n\r\n",i] dataUsingEncoding:NSUTF8StringEncoding]];
+//            [NSString stringWithFormat:@"%@-%d-%d",[((NSData *)item).description substringWithRange:NSMakeRange(1, 8)], ((NSData *)item).hash, (rand() % 1000 + 1) ]
             [data appendData:(NSData *)item];
             [data appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
         } else {
