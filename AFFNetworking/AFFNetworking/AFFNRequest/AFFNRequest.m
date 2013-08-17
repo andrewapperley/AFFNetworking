@@ -166,11 +166,12 @@ NSString *__AFFNKeyFinished = @"isFinished";
     [jsonString release];
     
     if(_type == kAFFNMulti) {
-        [data appendData:[[NSString stringWithFormat:@"%@--\r\n",_multiSeparator] dataUsingEncoding:NSUTF8StringEncoding]];
+        [data appendData:[[NSString stringWithFormat:@"--%@--\r\n",_multiSeparator] dataUsingEncoding:NSUTF8StringEncoding]];
     }
     [request setHTTPBody:data];
     [request setValue:[NSString stringWithFormat:@"%d", data.length] forHTTPHeaderField:@"Content-Length"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"" forHTTPHeaderField:@"Accept-Encoding"];//this is so you can measure download response time, without this line it has the option to compress the response, if it does compress it then you cant predict the size and the "expectedSize" will be -1
     [request setValue:@"iOS" forHTTPHeaderField:@"User-Agent"];
     
     [data release];
@@ -240,10 +241,10 @@ NSString *__AFFNKeyFinished = @"isFinished";
     if(_upDone)
         return;
     
-    if(MAX(1, ((CGFloat)totalBytesWritten / (CGFloat)totalBytesExpectedToWrite)) >= 1)
+    if( ((CGFloat)totalBytesWritten / (CGFloat)totalBytesExpectedToWrite) >= 1)
         _upDone = TRUE;
     
-    _upProgressBlock(MAX(1, ((CGFloat)totalBytesWritten / (CGFloat)totalBytesExpectedToWrite)));
+    _upProgressBlock(((CGFloat)totalBytesWritten / (CGFloat)totalBytesExpectedToWrite));
 }
 
 //Failure of the connection, returns the error through the failure block
@@ -284,10 +285,10 @@ NSString *__AFFNKeyFinished = @"isFinished";
     if(_downDone)
         return;
     
-    if(MAX(1, (downloadDataLength / expectedDataLength)) >= 1)
+    if((downloadDataLength / expectedDataLength) >= 1)
         _downDone = TRUE;
     
-    _downProgressBlock(MAX(1, (downloadDataLength / expectedDataLength)));
+    _downProgressBlock((downloadDataLength / expectedDataLength));
     
 }
 

@@ -35,11 +35,15 @@
     } andUploadProgressBlock:^(CGFloat uploadProgress) {
         NSLog(@"Upload progress: %f", uploadProgress);
     } andDownloadProgressBlock:^(CGFloat downloadProgress) {
-        NSLog(@"Upload progress: %f", downloadProgress);
+        NSLog(@"Download progress: %f", downloadProgress);
     }];
     
+    NSMutableArray *array = [NSMutableArray new];
 //    request.multipartData = [NSArray arrayWithObjects:@"Hello",@"Sup",@"this is stuff", nil];
-    request.multipartData = [NSArray arrayWithObjects:[[NSString stringWithFormat:@"DATA TEXT"] dataUsingEncoding:NSUTF8StringEncoding], [[NSString stringWithFormat:@"THIS IS TEXT AS DATA"] dataUsingEncoding:NSUTF8StringEncoding], nil];
+    for (int i = 0; i < 1500; i++) {
+        [array addObject:[[NSString stringWithFormat:@"DATA TEXT"] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    request.multipartData = array;
         [[AFFNManager sharedManager] addNetworkOperation:request];
 }
 
