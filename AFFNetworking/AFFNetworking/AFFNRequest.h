@@ -13,7 +13,7 @@ typedef NS_ENUM(NSUInteger, AFFNPostType)
 {
     kAFFNPost,
     kAFFNGet,
-    kAFFMulti
+    kAFFNMulti
 };
 
 @interface AFFNRequest : NSOperation <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
@@ -29,6 +29,9 @@ typedef NS_ENUM(NSUInteger, AFFNPostType)
     
     NSMutableData *receivedData;
     NSDate *requestTime;
+    
+    BOOL _upDone;
+    BOOL _downDone;
     
     /*Downloading progress*/
     float expectedDataLength;
@@ -47,6 +50,8 @@ typedef NS_ENUM(NSUInteger, AFFNPostType)
 
 - (AFFNRequest *)initWithURL:(NSString *)urlString connectionType:(AFFNPostType)type andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailBlock:(void (^)(NSError *error))failure andUpProgressBlock:(void (^)(float __upProgress))upProgressBlock andDProgressBlock:(void (^)(float))downProgressBlock;
 
+@property (nonatomic, retain) NSArray *multipartData;
+@property (nonatomic, assign) NSString *multiSeparator; //This is used for separating multi request data
 @property (nonatomic, assign) BOOL isConcurrent;        //Default is 'TRUE'
 @property (nonatomic, readonly) BOOL isExecuting;
 @property (nonatomic, readonly) BOOL isFinished;

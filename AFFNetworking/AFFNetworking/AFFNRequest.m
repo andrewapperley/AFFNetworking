@@ -8,10 +8,12 @@
 
 #import "AFFNRequest.h"
 #import "AFFNManager.h"
+#import <UIKit/UIImage.h>
 
 #pragma mark - Constants
 const NSTimeInterval __AFFNDefaultTimeout = 120;
 const NSURLCacheStoragePolicy __AFFNDefaultStoragePolicy = NSURLCacheStorageAllowedInMemoryOnly;
+const NSString *__AFFNDefaultMultiSeparator = @"_AFFNBoundary_";
 
 NSString *__AFFNKeyExecuting = @"isExecuting";
 NSString *__AFFNKeyFinished = @"isFinished";
@@ -21,6 +23,8 @@ NSString *__AFFNKeyFinished = @"isFinished";
 @synthesize isConcurrent = _isConcurrent;
 @synthesize timeoutInterval = _timeoutInterval;
 @synthesize storagePolicy = _storagePolicy;
+@synthesize multiSeparator = _multiSeparator;
+@synthesize multipartData = _multipartData;
 
 #pragma mark - Init
 
@@ -45,6 +49,7 @@ NSString *__AFFNKeyFinished = @"isFinished";
         _isConcurrent = TRUE;
         _timeoutInterval = __AFFNDefaultTimeout;
         _storagePolicy = __AFFNDefaultStoragePolicy;
+        _multiSeparator = (NSString *)__AFFNDefaultMultiSeparator;
         
         _params = [params copy];
         _urlString = [urlString copy];
@@ -104,7 +109,7 @@ NSString *__AFFNKeyFinished = @"isFinished";
     }
 
     
-    [self performSelector:_type == kAFFNPost ? @selector(generatePOSTRequest) : @selector(generateGETRequest)];
+    [self performSelector:_type == (kAFFNPost | kAFFNMulti) ? @selector(generatePOSTRequest) : @selector(generateGETRequest)];
     
     _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:FALSE];
     
@@ -136,6 +141,15 @@ NSString *__AFFNKeyFinished = @"isFinished";
     
     [request setHTTPMethod:@"POST"];
     
+    NSMutableData *data = [NSMutableData new];
+    
+    if(_type == kAFFNMulti) {
+        data = [self generateMultiRequestWithData:data];
+        [data appendData:[[NSString stringWithFormat:@"--%@\r\n",_multiSeparator] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    
     NSData *jsonData = [NSData data];
     
     NSError *error;
@@ -146,18 +160,54 @@ NSString *__AFFNKeyFinished = @"isFinished";
         assert(error);
     
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    [data appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"params\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+
+    [data appendData:[NSData dataWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding]]];
     
-    NSData *data = [NSData dataWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding]];
+    
     
     [jsonString release];
     
+    if(_type == kAFFNMulti) {
+        [data appendData:[[NSString stringWithFormat:@"%@--\r\n",_multiSeparator] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
     [request setHTTPBody:data];
     [request setValue:[NSString stringWithFormat:@"%d", data.length] forHTTPHeaderField:@"Content-Length"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:@"iOS" forHTTPHeaderField:@"User-Agent"];
     
+    [data release];
+    data = nil;
    
+}
+
+//Generates a Multi POST type request
+- (NSMutableData *)generateMultiRequestWithData:(NSMutableData *)data
+{
+    [request addValue:[NSString stringWithFormat:@"multipart/form-data; boundary=%@", _multiSeparator] forHTTPHeaderField:@"Content-Type"];
+    
+    for (id item in _multipartData) {
+        if([item isKindOfClass:[NSString class]])
+        {
+            [data appendData:[[NSString stringWithFormat:@"--%@\r\n", _multiSeparator] dataUsingEncoding:NSUTF8StringEncoding]];
+            [data appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", item] dataUsingEncoding:NSUTF8StringEncoding]];
+            [data appendData:[[NSString stringWithFormat:@"%@\r\n", item] dataUsingEncoding:NSUTF8StringEncoding]];
+        } else if([item isKindOfClass:[NSData class]])
+        {
+            [data appendData:[[NSString stringWithFormat:@"--%@\r\n", _multiSeparator] dataUsingEncoding:NSUTF8StringEncoding]];
+            [data appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", [NSString stringWithFormat:@"%@-%d-%d",[((NSData *)item).description substringWithRange:NSMakeRange(1, 8)], ((NSData *)item).hash, (rand() % 1000 + 1) ]] dataUsingEncoding:NSUTF8StringEncoding]];
+            [data appendData:(NSData *)item];
+            [data appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+        } else {
+            @throw [NSException
+                    exceptionWithName:@"File Format Exception"
+                    reason:@"NSData or NSString only"
+                    userInfo:nil];
+        }
+    }
+    
+    return data;
+    
 }
 
 //Generates a GET type request
@@ -191,6 +241,12 @@ NSString *__AFFNKeyFinished = @"isFinished";
 //Calculates the progress of the request
 - (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
+    if(_upDone)
+        return;
+    
+    if(MAX(1, ((float)totalBytesWritten / (float)totalBytesExpectedToWrite)) >= 1)
+        _upDone = true;
+    
     _upProgress(MAX(1, ((float)totalBytesWritten / (float)totalBytesExpectedToWrite)));
 }
 
@@ -220,7 +276,7 @@ NSString *__AFFNKeyFinished = @"isFinished";
     [receivedData setLength:0];
     downloadDataLength = 0;
     expectedDataLength = response.expectedContentLength;
-    
+    _downDone = false;
 }
 
 //Appends data to the data object
@@ -228,6 +284,12 @@ NSString *__AFFNKeyFinished = @"isFinished";
 {
     downloadDataLength += data.length;
     [receivedData appendData:data];
+    
+    if(_downDone)
+        return;
+    
+    if(MAX(1, (downloadDataLength / expectedDataLength)) >= 1)
+        _downDone = true;
     
     _downProgress(MAX(1, (downloadDataLength / expectedDataLength)));
     
@@ -290,6 +352,9 @@ NSString *__AFFNKeyFinished = @"isFinished";
     
     [requestTime release];
     requestTime = nil;
+    
+    [_multipartData release];
+    _multipartData = nil;
     
     if(receivedData){
         [receivedData release];

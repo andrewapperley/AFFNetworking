@@ -21,7 +21,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-        AFFNRequest *request = [AFFNRequest requestWithURL:@"http://localhost:8888/aff/request_dump.php" connectionType:kAFFNPost andParams:[NSDictionary dictionaryWithObjectsAndKeys:@"Andrew",@"name", nil] withCompletion:^(AFFNCallbackObject *result) {
+        AFFNRequest *request = [AFFNRequest requestWithURL:@"http://dev.andrewapperley.ca/aff/request_dump.php" connectionType:kAFFNMulti andParams:[NSDictionary dictionaryWithObjectsAndKeys:@"Andrew",@"name", nil] withCompletion:^(AFFNCallbackObject *result) {
             
             NSLog(@"TOTAL TIME: %f",result.totalRequestTime);
             
@@ -37,7 +37,9 @@
         } andDProgressBlock:^(float progress){
             NSLog(@"%f",progress);
         } ];
-        
+    
+//    request.multipartData = [NSArray arrayWithObjects:@"Hello",@"Sup",@"this is stuff", nil];
+    request.multipartData = [NSArray arrayWithObjects:[[NSString stringWithFormat:@"DATA TEXT"] dataUsingEncoding:NSUTF8StringEncoding], [[NSString stringWithFormat:@"THIS IS TEXT AS DATA"] dataUsingEncoding:NSUTF8StringEncoding], nil];
         [[AFFNManager sharedManager] addNetworkOperation:request];
 }
 
