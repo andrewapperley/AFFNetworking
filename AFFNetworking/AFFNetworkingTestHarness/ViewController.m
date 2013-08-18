@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 AFApps. All rights reserved.
 //
 
-#import "AFFNRequest.h"
-#import "AFFNManager.h"
 #import "ViewController.h"
+#import "AFFNStreamingRequest.h"
+#import "AFFNManager.h"
 
 @interface ViewController ()
 
@@ -21,28 +21,13 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.    
-    
-    for (int i = 0; i < 30; i++) {
-        AFFNRequest *request = [AFFNRequest requestWithConnectionType:kAFFNPost andURL:@"http://dev.andrewapperley.ca/aff/request_dump.php" andParams:[NSDictionary dictionaryWithObjectsAndKeys:@"Andrew",@"name", nil] withCompletion:^(AFFNCallbackObject *result) {
-            
-//            NSLog(@"TOTAL TIME: %f",result.totalRequestTime);
-//            
-//            NSString *resultString = [[[NSString alloc] initWithData:result.data encoding:NSStringEncodingConversionAllowLossy] autorelease];
-//            
-//            NSLog(@"RESULT: %@",resultString);
-            
-        } andFailure:^(NSError *error) {
-            NSLog(@"ERROR: %@",error);
-        } andUploadProgressBlock:^(CGFloat uploadProgress) {
-//            if(uploadProgress == 1)
-//                NSLog(@"Upload progress: %f", uploadProgress);
-        } andDownloadProgressBlock:^(CGFloat downloadProgress) {
-            if(downloadProgress == 1)
-                NSLog(@"Download progress: %f", downloadProgress);
-        }];
+    AFFNStreamingRequest *request = [AFFNStreamingRequest streamingRequestWithFileName:@"tests" andExtention:@"txt" andURL:@"http://dev.andrewapperley.ca/aff/request_dump.php" andParams:[NSDictionary dictionaryWithObject:@"Andrew" forKey:@"name"] withCompletion:^(AFFNCallbackObject *result)
+    {
+        NSLog(@"file path: %@",result.streamObjectPath);
         
-        [[AFFNManager sharedManager] addNetworkOperation:request];
-    }
+    } andFailure:nil];
+    
+    [[AFFNManager sharedManager] addNetworkOperation:request];
 }
 
 - (void)didReceiveMemoryWarning

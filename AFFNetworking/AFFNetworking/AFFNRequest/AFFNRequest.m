@@ -13,8 +13,8 @@ const NSTimeInterval __AFFNDefaultTimeout = 120;
 const NSURLCacheStoragePolicy __AFFNDefaultStoragePolicy = NSURLCacheStorageAllowedInMemoryOnly;
 const NSString *__AFFNDefaultMultiSeparator = @"---------------------_AFFNBoundary_";
 
-NSString *__AFFNKeyExecuting = @"isExecuting";
-NSString *__AFFNKeyFinished = @"isFinished";
+static NSString *__AFFNKeyExecuting = @"isExecuting";
+static NSString *__AFFNKeyFinished = @"isFinished";
 
 @implementation AFFNRequest
 @synthesize multiSeparator = _multiSeparator;
@@ -278,7 +278,8 @@ NSString *__AFFNKeyFinished = @"isFinished";
 //Sets the progress and data to 0 as a request/attempt has started
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-    [receivedData setLength:0];
+    if(receivedData)
+        [receivedData setLength:0];
     downloadDataLength = 0;
     expectedDataLength = response.expectedContentLength;
     _downDone = FALSE;
@@ -288,7 +289,8 @@ NSString *__AFFNKeyFinished = @"isFinished";
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     downloadDataLength += data.length;
-    [receivedData appendData:data];
+    if(receivedData)
+        [receivedData appendData:data];
     
     if(_downDone || _downProgressBlock)
         return;

@@ -12,7 +12,9 @@
 
 @property (nonatomic, readonly) CGFloat totalRequestTime;
 @property (nonatomic, readonly) NSData *data;
+@property (nonatomic, readonly) NSString *streamObjectPath;
 
 + (id)callbackWithData:(NSData *)data andReqestTime:(CGFloat)requestTime;
++ (id)callbackWitStreamedObjectPath:(NSString *)path andReqestTime:(CGFloat)requestTime;
 
 @end

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F2F182C17C039EA005A411F /* AFFNStreamingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2F182B17C039EA005A411F /* AFFNStreamingRequest.m */; };
+		0F2F182D17C04E63005A411F /* AFFNStreamingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2F182B17C039EA005A411F /* AFFNStreamingRequest.m */; };
 		0F85C08317B67BDD00922D58 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F85C08217B67BDD00922D58 /* UIKit.framework */; };
 		0F85C08417B67BDD00922D58 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F8F996E17B1C02A00671F6F /* Foundation.framework */; };
 		0F85C08617B67BDD00922D58 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F85C08517B67BDD00922D58 /* CoreGraphics.framework */; };
@@ -41,6 +43,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0F2F182A17C039EA005A411F /* AFFNStreamingRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFFNStreamingRequest.h; sourceTree = "<group>"; };
+		0F2F182B17C039EA005A411F /* AFFNStreamingRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFFNStreamingRequest.m; sourceTree = "<group>"; };
 		0F85C08117B67BDD00922D58 /* AFFNetworkingTestHarness.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AFFNetworkingTestHarness.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F85C08217B67BDD00922D58 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0F85C08517B67BDD00922D58 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -181,6 +185,8 @@
 			children = (
 				76DB151617BF37D900CE127E /* AFFNRequest.h */,
 				76DB151717BF37D900CE127E /* AFFNRequest.m */,
+				0F2F182A17C039EA005A411F /* AFFNStreamingRequest.h */,
+				0F2F182B17C039EA005A411F /* AFFNStreamingRequest.m */,
 			);
 			path = AFFNRequest;
 			sourceTree = "<group>";
@@ -276,6 +282,7 @@
 				76DB151917BF37D900CE127E /* AFFNCallbackObject.m in Sources */,
 				76DB151B17BF37D900CE127E /* AFFNManager.m in Sources */,
 				76DB151D17BF37D900CE127E /* AFFNRequest.m in Sources */,
+				0F2F182D17C04E63005A411F /* AFFNStreamingRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,6 +293,7 @@
 				76DB151817BF37D900CE127E /* AFFNCallbackObject.m in Sources */,
 				76DB151A17BF37D900CE127E /* AFFNManager.m in Sources */,
 				76DB151C17BF37D900CE127E /* AFFNRequest.m in Sources */,
+				0F2F182C17C039EA005A411F /* AFFNStreamingRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
