@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "AFFNStreamingRequest.h"
+#import "AFFNRequest.h"
 #import "AFFNManager.h"
 
 @interface ViewController ()
@@ -21,11 +21,13 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.    
-    AFFNStreamingRequest *request = [AFFNStreamingRequest streamingRequestWithFileName:@"tests" andExtention:@"txt" andURL:@"http://dev.andrewapperley.ca/aff/request_dump.php" andParams:[NSDictionary dictionaryWithObject:@"Andrew" forKey:@"name"] withCompletion:^(AFFNCallbackObject *result)
-    {
-        NSLog(@"file path: %@",result.streamObjectPath);
+    
+    AFFNRequest *request = [AFFNRequest requestWithConnectionType:kAFFNPost andURL:@"http://dev.andrewapperley.ca/aff/request_dump.php" andParams:[NSDictionary dictionaryWithObject:@"Andrew" forKey:@"name"] withCompletion:^(AFFNCallbackObject *result){
+        NSLog(@"%@",result.data);
+    
+    } andFailure:^(NSError *error){
         
-    } andFailure:nil];
+    }];
     
     [[AFFNManager sharedManager] addNetworkOperation:request];
 }

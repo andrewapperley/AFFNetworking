@@ -292,7 +292,7 @@ static NSString *__AFFNKeyFinished = @"isFinished";
     if(receivedData)
         [receivedData appendData:data];
     
-    if(_downDone || _downProgressBlock)
+    if(_downDone || !_downProgressBlock)
         return;
     
     if((downloadDataLength / expectedDataLength) >= 1)
