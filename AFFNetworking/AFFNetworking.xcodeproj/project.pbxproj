@@ -19,6 +19,15 @@
 		0F85C09617B67BDD00922D58 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F85C09517B67BDD00922D58 /* Default@2x.png */; };
 		0F85C09817B67BDD00922D58 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F85C09717B67BDD00922D58 /* Default-568h@2x.png */; };
 		0F8F996F17B1C02A00671F6F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F8F996E17B1C02A00671F6F /* Foundation.framework */; };
+		0FBEF8AB17C1C5C8009F0640 /* AFFNCallbackObject.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 76DB151017BF37D900CE127E /* AFFNCallbackObject.h */; };
+		0FBEF8AC17C1C5C8009F0640 /* AFFNManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 76DB151317BF37D900CE127E /* AFFNManager.h */; };
+		0FBEF8AD17C1C5C8009F0640 /* AFFNRequest.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 76DB151617BF37D900CE127E /* AFFNRequest.h */; };
+		0FBEF8AE17C1C5C8009F0640 /* AFFNStreamingRequest.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0F2F182A17C039EA005A411F /* AFFNStreamingRequest.h */; };
+		0FBEF8B517C1C719009F0640 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FBEF8B417C1C719009F0640 /* CoreFoundation.framework */; };
+		0FBEF8C017C1C76C009F0640 /* AFFNCallbackObject.h in Resources */ = {isa = PBXBuildFile; fileRef = 76DB151017BF37D900CE127E /* AFFNCallbackObject.h */; };
+		0FBEF8C217C1C76C009F0640 /* AFFNManager.h in Resources */ = {isa = PBXBuildFile; fileRef = 76DB151317BF37D900CE127E /* AFFNManager.h */; };
+		0FBEF8C417C1C76C009F0640 /* AFFNRequest.h in Resources */ = {isa = PBXBuildFile; fileRef = 76DB151617BF37D900CE127E /* AFFNRequest.h */; };
+		0FBEF8C617C1C76C009F0640 /* AFFNStreamingRequest.h in Resources */ = {isa = PBXBuildFile; fileRef = 0F2F182A17C039EA005A411F /* AFFNStreamingRequest.h */; };
 		76DB151817BF37D900CE127E /* AFFNCallbackObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DB151117BF37D900CE127E /* AFFNCallbackObject.m */; };
 		76DB151917BF37D900CE127E /* AFFNCallbackObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DB151117BF37D900CE127E /* AFFNCallbackObject.m */; };
 		76DB151A17BF37D900CE127E /* AFFNManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DB151417BF37D900CE127E /* AFFNManager.m */; };
@@ -34,6 +43,10 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				0FBEF8AB17C1C5C8009F0640 /* AFFNCallbackObject.h in CopyFiles */,
+				0FBEF8AC17C1C5C8009F0640 /* AFFNManager.h in CopyFiles */,
+				0FBEF8AD17C1C5C8009F0640 /* AFFNRequest.h in CopyFiles */,
+				0FBEF8AE17C1C5C8009F0640 /* AFFNStreamingRequest.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +69,11 @@
 		0F85C09717B67BDD00922D58 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		0F8F996B17B1C02A00671F6F /* libAFFNetworking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAFFNetworking.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F8F996E17B1C02A00671F6F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		0FBEF8B317C1C719009F0640 /* AFFNetworking-Resources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AFFNetworking-Resources.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0FBEF8B417C1C719009F0640 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		0FBEF8B817C1C71A009F0640 /* AFFNetworking-Resources-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AFFNetworking-Resources-Info.plist"; sourceTree = "<group>"; };
+		0FBEF8BA17C1C71A009F0640 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0FBEF8BC17C1C71A009F0640 /* AFFNetworking-Resources-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AFFNetworking-Resources-Prefix.pch"; sourceTree = "<group>"; };
 		76DB151017BF37D900CE127E /* AFFNCallbackObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFFNCallbackObject.h; sourceTree = "<group>"; };
 		76DB151117BF37D900CE127E /* AFFNCallbackObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFFNCallbackObject.m; sourceTree = "<group>"; };
 		76DB151317BF37D900CE127E /* AFFNManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFFNManager.h; sourceTree = "<group>"; };
@@ -81,6 +99,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F8F996F17B1C02A00671F6F /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0FBEF8B017C1C719009F0640 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0FBEF8B517C1C719009F0640 /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +143,7 @@
 			children = (
 				76DB150E17BF37D900CE127E /* AFFNetworking */,
 				0F85C08717B67BDD00922D58 /* AFFNetworkingTestHarness */,
+				0FBEF8B617C1C71A009F0640 /* AFFNetworking-Resources */,
 				0F8F996D17B1C02A00671F6F /* Frameworks */,
 				0F8F996C17B1C02A00671F6F /* Products */,
 			);
@@ -127,6 +154,7 @@
 			children = (
 				0F8F996B17B1C02A00671F6F /* libAFFNetworking.a */,
 				0F85C08117B67BDD00922D58 /* AFFNetworkingTestHarness.app */,
+				0FBEF8B317C1C719009F0640 /* AFFNetworking-Resources.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -137,8 +165,27 @@
 				0F8F996E17B1C02A00671F6F /* Foundation.framework */,
 				0F85C08217B67BDD00922D58 /* UIKit.framework */,
 				0F85C08517B67BDD00922D58 /* CoreGraphics.framework */,
+				0FBEF8B417C1C719009F0640 /* CoreFoundation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0FBEF8B617C1C71A009F0640 /* AFFNetworking-Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0FBEF8B717C1C71A009F0640 /* Supporting Files */,
+			);
+			path = "AFFNetworking-Resources";
+			sourceTree = "<group>";
+		};
+		0FBEF8B717C1C71A009F0640 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0FBEF8B817C1C71A009F0640 /* AFFNetworking-Resources-Info.plist */,
+				0FBEF8B917C1C71A009F0640 /* InfoPlist.strings */,
+				0FBEF8BC17C1C71A009F0640 /* AFFNetworking-Resources-Prefix.pch */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		76DB150E17BF37D900CE127E /* AFFNetworking */ = {
@@ -217,6 +264,23 @@
 			productReference = 0F8F996B17B1C02A00671F6F /* libAFFNetworking.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		0FBEF8B217C1C719009F0640 /* AFFNetworking-Resources */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0FBEF8BF17C1C71A009F0640 /* Build configuration list for PBXNativeTarget "AFFNetworking-Resources" */;
+			buildPhases = (
+				0FBEF8AF17C1C719009F0640 /* Sources */,
+				0FBEF8B017C1C719009F0640 /* Frameworks */,
+				0FBEF8B117C1C719009F0640 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "AFFNetworking-Resources";
+			productName = "AFFNetworking-Resources";
+			productReference = 0FBEF8B317C1C719009F0640 /* AFFNetworking-Resources.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -240,6 +304,7 @@
 			targets = (
 				0F8F996A17B1C02A00671F6F /* AFFNetworking */,
 				0F85C08017B67BDD00922D58 /* AFFNetworkingTestHarness */,
+				0FBEF8B217C1C719009F0640 /* AFFNetworking-Resources */,
 			);
 		};
 /* End PBXProject section */
@@ -253,6 +318,17 @@
 				0F85C09417B67BDD00922D58 /* Default.png in Resources */,
 				0F85C09617B67BDD00922D58 /* Default@2x.png in Resources */,
 				0F85C09817B67BDD00922D58 /* Default-568h@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0FBEF8B117C1C719009F0640 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0FBEF8C017C1C76C009F0640 /* AFFNCallbackObject.h in Resources */,
+				0FBEF8C217C1C76C009F0640 /* AFFNManager.h in Resources */,
+				0FBEF8C417C1C76C009F0640 /* AFFNRequest.h in Resources */,
+				0FBEF8C617C1C76C009F0640 /* AFFNStreamingRequest.h in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,6 +359,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0FBEF8AF17C1C719009F0640 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
@@ -290,6 +373,14 @@
 			isa = PBXVariantGroup;
 			children = (
 				0F85C08B17B67BDD00922D58 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		0FBEF8B917C1C71A009F0640 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0FBEF8BA17C1C71A009F0640 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -405,6 +496,43 @@
 			};
 			name = Release;
 		};
+		0FBEF8BD17C1C71A009F0640 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AFFNetworking-Resources/AFFNetworking-Resources-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_FILE = "AFFNetworking-Resources/AFFNetworking-Resources-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		0FBEF8BE17C1C71A009F0640 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AFFNetworking-Resources/AFFNetworking-Resources-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_FILE = "AFFNetworking-Resources/AFFNetworking-Resources-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -434,6 +562,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		0FBEF8BF17C1C71A009F0640 /* Build configuration list for PBXNativeTarget "AFFNetworking-Resources" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0FBEF8BD17C1C71A009F0640 /* Debug */,
+				0FBEF8BE17C1C71A009F0640 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

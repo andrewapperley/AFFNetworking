@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>AFFNetworking-Resources.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>AFFNetworking.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -23,6 +28,11 @@
 			<true/>
 		</dict>
 		<key>0F8F996A17B1C02A00671F6F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0FBEF8B217C1C719009F0640</key>
 		<dict>
 			<key>primary</key>
 			<true/>
