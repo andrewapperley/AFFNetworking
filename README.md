@@ -2,7 +2,7 @@ AFFNetworking
 =============
 
 AFFNetworking is networking wrapper that provides an easy way to interface with a server using signed (oAuth) and unsigned requests.
-It features support for uploading, downloading, progress, streaming data, RESTful requests. Based on NSURLConnection, NSOperation, and NSOperationQueue it
+It features support for uploading, downloading, progress, streaming data, RESTful requests. As AFFNetworking is based on NSURLConnection, NSOperation, and NSOperationQueue it
 will be a fast and easy way to send/receive data from/to a server and takes away all the hassle of writing the barebones code yourself, allowing you worry about your project instead.
 
 **oAuth will be added in the near future**
