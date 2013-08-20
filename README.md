@@ -69,7 +69,7 @@ AFFNStreamingRequest - A request that lets you stream the data from a POST reque
 		  params1 = nil;
     
     
-**//Create GET Request with completion/failure callbacks (It takes the params you pass in and makes key/value pairs in the URL so pass in a url that omits the '?' at the end, this is put in with the params.**
+**//Create GET Request with completion/failure callbacks (It takes the params you pass in and makes key/value pairs in the URL so pass in a url that omits the '?' at the end.**
    
     AFFNRequest *request2 = [AFFNRequest requestWithConnectionType:kAFFNGet andURL:@"http://api.openweathermap.org/data/2.5/weather" andParams:[NSDictionary dictionaryWithObject:@"Toronto" forKey:@"q"] withCompletion:^(AFFNCallbackObject *result){
         //Callback block for completion
