@@ -22,12 +22,21 @@
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
-    [self testingNetworking];
+//    [self testingNetworking];
+    [AFFNImageManager sharedManager];
+    self.viewController = [[ViewController alloc] initWithNibName:nil bundle:nil];
+    self.window.rootViewController = self.viewController;
+    [self.window makeKeyAndVisible];
+    self.window.backgroundColor = [UIColor whiteColor];
+    
     return YES;
 }
 
 - (void)testingNetworking
 {
+    
+    
+    
     //Create POST Request with completion/failure/download/upload callbacks
     NSMutableDictionary *params1 = [NSMutableDictionary new];
     for (int i = 0; i < 500; i++) {

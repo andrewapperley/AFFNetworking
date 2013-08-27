@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0F2F182C17C039EA005A411F /* AFFNStreamingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2F182B17C039EA005A411F /* AFFNStreamingRequest.m */; };
 		0F2F182D17C04E63005A411F /* AFFNStreamingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2F182B17C039EA005A411F /* AFFNStreamingRequest.m */; };
+		0F41DEC817C5ACF1001B0205 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F41DEC717C5ACF1001B0205 /* ViewController.m */; };
+		0F41DECA17C5AF2A001B0205 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F41DEC917C5AF2A001B0205 /* logo.png */; };
 		0F85C08317B67BDD00922D58 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F85C08217B67BDD00922D58 /* UIKit.framework */; };
 		0F85C08417B67BDD00922D58 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F8F996E17B1C02A00671F6F /* Foundation.framework */; };
 		0F85C08617B67BDD00922D58 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F85C08517B67BDD00922D58 /* CoreGraphics.framework */; };
@@ -19,6 +21,10 @@
 		0F85C09617B67BDD00922D58 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F85C09517B67BDD00922D58 /* Default@2x.png */; };
 		0F85C09817B67BDD00922D58 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F85C09717B67BDD00922D58 /* Default-568h@2x.png */; };
 		0F8F996F17B1C02A00671F6F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F8F996E17B1C02A00671F6F /* Foundation.framework */; };
+		0FBC9BC917C4640400FEFEC8 /* UIImageView+AFFNImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBC9BC817C4640400FEFEC8 /* UIImageView+AFFNImage.m */; };
+		0FBC9BCB17C4642100FEFEC8 /* UIImageView+AFFNImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBC9BC817C4640400FEFEC8 /* UIImageView+AFFNImage.m */; };
+		0FBC9BCE17C4644700FEFEC8 /* AFFNImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBC9BCD17C4644700FEFEC8 /* AFFNImageManager.m */; };
+		0FBC9BCF17C4644700FEFEC8 /* AFFNImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FBC9BCD17C4644700FEFEC8 /* AFFNImageManager.m */; };
 		0FBEF8AB17C1C5C8009F0640 /* AFFNCallbackObject.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 76DB151017BF37D900CE127E /* AFFNCallbackObject.h */; };
 		0FBEF8AC17C1C5C8009F0640 /* AFFNManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 76DB151317BF37D900CE127E /* AFFNManager.h */; };
 		0FBEF8AD17C1C5C8009F0640 /* AFFNRequest.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 76DB151617BF37D900CE127E /* AFFNRequest.h */; };
@@ -55,6 +61,9 @@
 /* Begin PBXFileReference section */
 		0F2F182A17C039EA005A411F /* AFFNStreamingRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFFNStreamingRequest.h; sourceTree = "<group>"; };
 		0F2F182B17C039EA005A411F /* AFFNStreamingRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFFNStreamingRequest.m; sourceTree = "<group>"; };
+		0F41DEC617C5ACF1001B0205 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		0F41DEC717C5ACF1001B0205 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		0F41DEC917C5AF2A001B0205 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		0F85C08117B67BDD00922D58 /* AFFNetworkingTestHarness.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AFFNetworkingTestHarness.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F85C08217B67BDD00922D58 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		0F85C08517B67BDD00922D58 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -69,6 +78,10 @@
 		0F85C09717B67BDD00922D58 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		0F8F996B17B1C02A00671F6F /* libAFFNetworking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAFFNetworking.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F8F996E17B1C02A00671F6F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		0FBC9BC717C4640400FEFEC8 /* UIImageView+AFFNImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFFNImage.h"; sourceTree = "<group>"; };
+		0FBC9BC817C4640400FEFEC8 /* UIImageView+AFFNImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFFNImage.m"; sourceTree = "<group>"; };
+		0FBC9BCC17C4644700FEFEC8 /* AFFNImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFFNImageManager.h; sourceTree = "<group>"; };
+		0FBC9BCD17C4644700FEFEC8 /* AFFNImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFFNImageManager.m; sourceTree = "<group>"; };
 		0FBEF8B317C1C719009F0640 /* AFFNetworking-Resources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AFFNetworking-Resources.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FBEF8B417C1C719009F0640 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		0FBEF8B817C1C71A009F0640 /* AFFNetworking-Resources-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AFFNetworking-Resources-Info.plist"; sourceTree = "<group>"; };
@@ -116,9 +129,12 @@
 		0F85C08717B67BDD00922D58 /* AFFNetworkingTestHarness */ = {
 			isa = PBXGroup;
 			children = (
+				0F41DEC917C5AF2A001B0205 /* logo.png */,
 				0F85C09017B67BDD00922D58 /* AppDelegate.h */,
 				0F85C09117B67BDD00922D58 /* AppDelegate.m */,
 				0F85C08817B67BDD00922D58 /* Supporting Files */,
+				0F41DEC617C5ACF1001B0205 /* ViewController.h */,
+				0F41DEC717C5ACF1001B0205 /* ViewController.m */,
 			);
 			path = AFFNetworkingTestHarness;
 			sourceTree = "<group>";
@@ -170,6 +186,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		0FBC9BC617C4638600FEFEC8 /* AFFNImage */ = {
+			isa = PBXGroup;
+			children = (
+				0FBC9BC717C4640400FEFEC8 /* UIImageView+AFFNImage.h */,
+				0FBC9BC817C4640400FEFEC8 /* UIImageView+AFFNImage.m */,
+				0FBC9BCC17C4644700FEFEC8 /* AFFNImageManager.h */,
+				0FBC9BCD17C4644700FEFEC8 /* AFFNImageManager.m */,
+			);
+			path = AFFNImage;
+			sourceTree = "<group>";
+		};
 		0FBEF8B617C1C71A009F0640 /* AFFNetworking-Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -191,6 +218,7 @@
 		76DB150E17BF37D900CE127E /* AFFNetworking */ = {
 			isa = PBXGroup;
 			children = (
+				0FBC9BC617C4638600FEFEC8 /* AFFNImage */,
 				76DB150F17BF37D900CE127E /* AFFNCallbackObject */,
 				76DB151217BF37D900CE127E /* AFFNManager */,
 				76DB151517BF37D900CE127E /* AFFNRequest */,
@@ -318,6 +346,7 @@
 				0F85C09417B67BDD00922D58 /* Default.png in Resources */,
 				0F85C09617B67BDD00922D58 /* Default@2x.png in Resources */,
 				0F85C09817B67BDD00922D58 /* Default-568h@2x.png in Resources */,
+				0F41DECA17C5AF2A001B0205 /* logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +374,9 @@
 				76DB151B17BF37D900CE127E /* AFFNManager.m in Sources */,
 				76DB151D17BF37D900CE127E /* AFFNRequest.m in Sources */,
 				0F2F182D17C04E63005A411F /* AFFNStreamingRequest.m in Sources */,
+				0FBC9BCB17C4642100FEFEC8 /* UIImageView+AFFNImage.m in Sources */,
+				0FBC9BCF17C4644700FEFEC8 /* AFFNImageManager.m in Sources */,
+				0F41DEC817C5ACF1001B0205 /* ViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,6 +388,8 @@
 				76DB151A17BF37D900CE127E /* AFFNManager.m in Sources */,
 				76DB151C17BF37D900CE127E /* AFFNRequest.m in Sources */,
 				0F2F182C17C039EA005A411F /* AFFNStreamingRequest.m in Sources */,
+				0FBC9BC917C4640400FEFEC8 /* UIImageView+AFFNImage.m in Sources */,
+				0FBC9BCE17C4644700FEFEC8 /* AFFNImageManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,6 +430,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AFFNetworkingTestHarness/AFFNetworkingTestHarness-Prefix.pch";
 				INFOPLIST_FILE = "AFFNetworkingTestHarness/AFFNetworkingTestHarness-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -410,6 +445,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AFFNetworkingTestHarness/AFFNetworkingTestHarness-Prefix.pch";
 				INFOPLIST_FILE = "AFFNetworkingTestHarness/AFFNetworkingTestHarness-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -441,7 +477,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -464,7 +500,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -570,6 +606,7 @@
 				0FBEF8BE17C1C71A009F0640 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

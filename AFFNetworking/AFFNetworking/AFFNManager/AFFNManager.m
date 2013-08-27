@@ -41,7 +41,8 @@ const NSUInteger __AFFNManagerDefaultConcurrentQueueCount = 4;
 #pragma mark - Init
 //Singleton sharedManager method
 + (AFFNManager *)sharedManager
-{    
+{
+
     static dispatch_once_t onceToken;
     static AFFNManager *_sharedManager = nil;
     
