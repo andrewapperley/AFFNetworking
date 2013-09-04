@@ -14,17 +14,17 @@
 
 static char imageUrlKey;
 
-- (id)initWithFrame:(CGRect)frame andPlaceholderImage:(UIImage *)phImage andImageURL:(NSString *)imageURL
+- (UIImageView *)initWithFrame:(CGRect)frame andPlaceholderImage:(UIImage *)phImage andImageURL:(NSString *)imageURL andExpiry:(NSDate *)expiry andToCache:(BOOL)cache
 {
     self = [super initWithFrame:frame];
     if(self)
     {
         self.frame = frame;
         [self setLimageURL:imageURL];
-        self.image = [AFFNImageManager doesImageExist:imageURL] ? [AFFNImageManager returnCachedImage:imageURL] : phImage;
+        self.image = [AFFNImageManager doesImageExist:imageURL] && cache ? [AFFNImageManager returnCachedImage:imageURL] : phImage;
         
         if([self.image isEqual:phImage])
-            [self callURLForImage:imageURL];
+            [self callURLForImage:imageURL withExpiry:expiry];
     }
     return self;
 }
@@ -39,9 +39,11 @@ static char imageUrlKey;
     objc_setAssociatedObject(self, &imageUrlKey, limageURL, OBJC_ASSOCIATION_COPY);
 }
 
-- (void)callURLForImage:(NSString *)imageURL
+- (void)callURLForImage:(NSString *)imageURL withExpiry:(NSDate *)expiry
 {
    __block UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    
+    __block NSDate *_expiry = [expiry copy];
     
     spinner.frame = CGRectMake((self.frame.size.width - spinner.frame.size.width) / 2, (self.frame.size.height - spinner.frame.size.height) / 2, spinner.frame.size.width, spinner.frame.size.height);
     
@@ -58,7 +60,9 @@ static char imageUrlKey;
                 [spinner release];
                 spinner = nil;
                 self.image = [UIImage imageWithData:result.data];
-                [AFFNImageManager cacheImage:self.image withName:self.limageURL];
+                [AFFNImageManager cacheImage:self.image withName:self.limageURL withExpiry:_expiry];
+                [_expiry release];
+                _expiry = nil;
             }];
         });
     } andFailure:^(NSError *error){
@@ -66,6 +70,8 @@ static char imageUrlKey;
         [spinner removeFromSuperview];
         [spinner release];
         spinner = nil;
+        [_expiry release];
+        _expiry = nil;
     }];
     
     [[AFFNManager sharedManager] addNetworkOperation:request];

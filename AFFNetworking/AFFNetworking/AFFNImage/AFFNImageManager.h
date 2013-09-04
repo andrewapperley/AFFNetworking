@@ -12,8 +12,12 @@
 
 
 + (AFFNImageManager *)sharedManager;
-+ (void)cacheImage:(UIImage *)limage withName:(NSString *)lname;
++ (void)cacheImage:(UIImage *)limage withName:(NSString *)lname withExpiry:(NSDate *)expiry;
 + (BOOL)doesImageExist:(NSString *)filePath;
 + (UIImage *)returnCachedImage:(NSString *)filePath;
 + (NSString *)getCacheDirectory;
+- (void)saveCacheListToFile;
+
+@property(atomic, retain)NSDictionary *imageList;
+@property(nonatomic, assign)NSTimer *timer;
 @end

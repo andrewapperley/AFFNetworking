@@ -10,5 +10,5 @@
 
 @interface UIImageView (AFFNImage)
 
-- (id)initWithFrame:(CGRect)frame andPlaceholderImage:(UIImage *)phImage andImageURL:(NSString *)imageURL;
+- (UIImageView *)initWithFrame:(CGRect)frame andPlaceholderImage:(UIImage *)phImage andImageURL:(NSString *)imageURL andExpiry:(NSDate *)expiry andToCache:(BOOL)cache;
 @end
