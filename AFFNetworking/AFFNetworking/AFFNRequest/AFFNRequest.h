@@ -39,7 +39,40 @@ typedef NS_ENUM(NSUInteger, AFFNPostType)
     kAFFNMulti
 };
 
-
+/*
+ * Init function to create the reqest object. It takes the URL in NSString format, POST/GET type, params to be used
+ * in the request in NSDictionary format, and a completion/fail block for a callback.
+ * //Without progress blocks
+ * @params
+ * AFFNPostType type
+ * NSString urlString
+ * NSDictionary params
+ * void Block (AFFNCallbackObject) completion
+ * void Block (NSError) failure
+ *
+ * //With progress blocks
+ * @params
+ * NSString name
+ * NSString ext
+ * NSString urlString
+ * NSDictionary params
+ * void Block (AFFNCallbackObject) completion
+ * void Block (NSError) failure
+ * void Block (float) uploadProgressBlock
+ * void Block (float) downloadProgressBlock
+ *
+ * //Multi-Part POST
+ * @params
+ * NSString name
+ * NSString ext
+ * NSString urlString
+ * NSDictionary params
+ * void Block (AFFNCallbackObject) completion
+ * void Block (NSError) failure
+ * void Block (float) uploadProgressBlock
+ * void Block (float) downloadProgressBlock
+ * NSArray multiData
+ */
 
 @interface AFFNRequest : NSOperation <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 {
@@ -70,6 +103,11 @@ typedef NS_ENUM(NSUInteger, AFFNPostType)
     void (^_upProgressBlock)(CGFloat upProgress);
     void (^_downProgressBlock)(CGFloat downProgress);
 }
+
+#pragma mark - Constants
+const NSTimeInterval __AFFNDefaultTimeout = 120;
+const NSURLCacheStoragePolicy __AFFNDefaultStoragePolicy = NSURLCacheStorageAllowedInMemoryOnly;
+const NSString *__AFFNDefaultMultiSeparator = @"---------------------_AFFNBoundary_";
 
 + (AFFNRequest *)requestWithConnectionType:(AFFNPostType)type andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailure:(void (^)(NSError *error))failure;
 

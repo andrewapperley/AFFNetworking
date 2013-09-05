@@ -40,6 +40,32 @@
     NSString *filePath;
 }
 
+/*
+ * Init functions for creating a streaming request
+ * //Without progress blocks
+ * @params
+ * AFFNPostType type
+ * NSString name
+ * NSString ext
+ * NSString urlString
+ * NSDictionary params
+ * void Block (AFFNCallbackObject) completion
+ * void Block (NSError) failure
+ *
+ * //With progress blocks
+ * @params
+ * AFFNPostType type
+ * NSString name
+ * NSString ext
+ * NSString urlString
+ * NSDictionary params
+ * void Block (AFFNCallbackObject) completion
+ * void Block (NSError) failure
+ * void Block (float) uploadProgressBlock
+ * void Block (float) downloadProgressBlock
+ */
+
+
 + (AFFNStreamingRequest *)streamingRequestWithConnectionType:(AFFNPostType)type FileName:(NSString *)name andExtention:(NSString *)ext andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailure:(void (^)(NSError *error))failure;
 
 + (AFFNStreamingRequest *)streamingRequestWithConnectionType:(AFFNPostType)type FileName:(NSString *)name andExtention:(NSString *)ext andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailure:(void (^)(NSError *error))failure andUploadProgressBlock:(void (^)(CGFloat))uploadProgressBlock andDownloadProgressBlock:(void (^)(float))downloadProgressBlock;

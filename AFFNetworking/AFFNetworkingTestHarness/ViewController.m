@@ -18,7 +18,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        //Temp AFFNImage testing
+        //Demostrating how to create a cached image with expiry date
         UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 200, 300) andPlaceholderImage:[UIImage imageNamed:@"logo.png"] andImageURL:@"http://andrewapperley.ca/backend_admin/blog_images/Screen-Shot-2013-08-17-at-1.12.18-AM.jpg" andExpiry:[NSDate date] andToCache:true];
         
         UIImageView *iv1 = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 200, 300) andPlaceholderImage:[UIImage imageNamed:@"logo.png"] andImageURL:@"http://andrewapperley.ca/backend_admin/blog_images/Screen-Shot-2013-08-29-at-7.27.40-PM.jpg" andExpiry:[NSDate date] andToCache:true];

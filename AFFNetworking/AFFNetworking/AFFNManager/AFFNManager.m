@@ -32,9 +32,6 @@
 #pragma mark - Macros
 #define LAST_NETWORK_OPERATION [_networkOperations.operations lastObject]
 
-#pragma mark - Constants
-const NSUInteger __AFFNManagerDefaultConcurrentQueueCount = 4;
-
 @implementation AFFNManager
 @synthesize networkOperations = _networkOperations;
 

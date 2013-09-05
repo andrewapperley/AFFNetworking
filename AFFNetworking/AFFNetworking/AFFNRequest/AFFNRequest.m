@@ -32,10 +32,6 @@
 #import "AFFNRequest.h"
 
 #pragma mark - Constants
-const NSTimeInterval __AFFNDefaultTimeout = 120;
-const NSURLCacheStoragePolicy __AFFNDefaultStoragePolicy = NSURLCacheStorageAllowedInMemoryOnly;
-const NSString *__AFFNDefaultMultiSeparator = @"---------------------_AFFNBoundary_";
-
 static NSString *__AFFNKeyExecuting = @"isExecuting";
 static NSString *__AFFNKeyFinished = @"isFinished";
 

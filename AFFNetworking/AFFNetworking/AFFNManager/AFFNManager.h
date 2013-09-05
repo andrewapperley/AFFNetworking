@@ -34,6 +34,9 @@
 
 @interface AFFNManager : NSObject
 
+#pragma mark - Constants
+const NSUInteger __AFFNManagerDefaultConcurrentQueueCount = 4;
+
 - (void)addNetworkOperation:(AFFNRequest *)operation;
 + (AFFNManager *)sharedManager;
 
