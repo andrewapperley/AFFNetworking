@@ -40,7 +40,7 @@
     NSString *filePath;
 }
 
-+ (AFFNStreamingRequest *)streamingRequestWithFileName:(NSString *)name andExtention:(NSString *)ext andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailure:(void (^)(NSError *error))failure;
++ (AFFNStreamingRequest *)streamingRequestWithConnectionType:(AFFNPostType)type FileName:(NSString *)name andExtention:(NSString *)ext andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailure:(void (^)(NSError *error))failure;
 
-+ (AFFNStreamingRequest *)streamingRequestWithFileName:(NSString *)name andExtention:(NSString *)ext andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailure:(void (^)(NSError *error))failure andUploadProgressBlock:(void (^)(CGFloat))uploadProgressBlock andDownloadProgressBlock:(void (^)(float))downloadProgressBlock;
++ (AFFNStreamingRequest *)streamingRequestWithConnectionType:(AFFNPostType)type FileName:(NSString *)name andExtention:(NSString *)ext andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailure:(void (^)(NSError *error))failure andUploadProgressBlock:(void (^)(CGFloat))uploadProgressBlock andDownloadProgressBlock:(void (^)(float))downloadProgressBlock;
 @end

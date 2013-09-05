@@ -40,6 +40,7 @@ static NSString *__AFFNKeyFinished = @"isFinished";
  * Init functions for creating a streaming request
  * //Without progress blocks
  * @params
+ * AFFNPostType type
  * NSString name
  * NSString ext
  * NSString urlString
@@ -49,6 +50,7 @@ static NSString *__AFFNKeyFinished = @"isFinished";
  *
  * //With progress blocks
  * @params
+ * AFFNPostType type
  * NSString name
  * NSString ext
  * NSString urlString
@@ -59,19 +61,19 @@ static NSString *__AFFNKeyFinished = @"isFinished";
  * void Block (float) downloadProgressBlock
  */
 
-+ (AFFNStreamingRequest *)streamingRequestWithFileName:(NSString *)name andExtention:(NSString *)ext andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailure:(void (^)(NSError *error))failure
++ (AFFNStreamingRequest *)streamingRequestWithConnectionType:(AFFNPostType)type FileName:(NSString *)name andExtention:(NSString *)ext andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailure:(void (^)(NSError *error))failure
 {
-    return [[[self alloc] initStreamingRequestWithFileName:name andExtention:ext andURL:urlString andParams:params withCompletion:completion andFailure:failure andUploadProgressBlock:nil andDownloadProgressBlock:nil] autorelease];
+    return [[[self alloc] initWithConnectionType:(AFFNPostType)type andStreamingRequestWithFileName:name andExtention:ext andURL:urlString andParams:params withCompletion:completion andFailure:failure andUploadProgressBlock:nil andDownloadProgressBlock:nil] autorelease];
 }
 
-+ (AFFNStreamingRequest *)streamingRequestWithFileName:(NSString *)name andExtention:(NSString *)ext andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailure:(void (^)(NSError *error))failure andUploadProgressBlock:(void (^)(CGFloat))uploadProgressBlock andDownloadProgressBlock:(void (^)(float))downloadProgressBlock
++ (AFFNStreamingRequest *)streamingRequestWithConnectionType:(AFFNPostType)type FileName:(NSString *)name andExtention:(NSString *)ext andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailure:(void (^)(NSError *error))failure andUploadProgressBlock:(void (^)(CGFloat))uploadProgressBlock andDownloadProgressBlock:(void (^)(float))downloadProgressBlock
 {
-    return [[[self alloc] initStreamingRequestWithFileName:name andExtention:ext andURL:urlString andParams:params withCompletion:completion andFailure:failure andUploadProgressBlock:uploadProgressBlock andDownloadProgressBlock:downloadProgressBlock] autorelease];
+    return [[[self alloc] initWithConnectionType:(AFFNPostType)type andStreamingRequestWithFileName:name andExtention:ext andURL:urlString andParams:params withCompletion:completion andFailure:failure andUploadProgressBlock:uploadProgressBlock andDownloadProgressBlock:downloadProgressBlock] autorelease];
 }
 
-- (AFFNStreamingRequest *)initStreamingRequestWithFileName:(NSString *)name andExtention:(NSString *)ext andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailure:(void (^)(NSError *error))failure andUploadProgressBlock:(void (^)(CGFloat))uploadProgressBlock andDownloadProgressBlock:(void (^)(float))downloadProgressBlock
+- (AFFNStreamingRequest *)initWithConnectionType:(AFFNPostType)type andStreamingRequestWithFileName:(NSString *)name andExtention:(NSString *)ext andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailure:(void (^)(NSError *error))failure andUploadProgressBlock:(void (^)(CGFloat))uploadProgressBlock andDownloadProgressBlock:(void (^)(float))downloadProgressBlock
 {
-    self = [super initWithConnectionType:kAFFNPost andURL:urlString andParams:params withCompletion:completion andFailure:failure];
+    self = [super initWithConnectionType:type andURL:urlString andParams:params withCompletion:completion andFailure:failure];
     
     if(self)
     {
