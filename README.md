@@ -127,7 +127,17 @@ AFFNStreamingRequest - A request that lets you stream the data from a POST reque
     }];
     
     [[AFFNManager sharedManager] addNetworkOperation:request4];
+    
+    
+**//Create AFFNImage - This will let you init an image that will cache it's result and expiry on the date/time you pass in**
 
+    UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 200, 300) 
+    	andPlaceholderImage:[UIImage imageNamed:@"logo.png"] 
+    		andImageURL:@"http://andrewapperley.ca/backend_admin/blog_images/Screen-Shot-2013-08-17-at-1.12.18-AM.jpg" 
+    			andExpiry:[NSDate date] 
+    				andToCache:true];
+    [self.view addSubview:iv];
 
 ##Changelog
 August 18th, 2013 - Initial Release as a static library - 1.0.1
+September 5th, 2013 - Release with AFFNImage, added GET type to StreamingRequests, and cleaned up code - 1.1
