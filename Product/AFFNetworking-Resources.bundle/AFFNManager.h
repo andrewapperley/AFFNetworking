@@ -32,6 +32,9 @@
 #import <Foundation/Foundation.h>
 #import "AFFNStreamingRequest.h"
 
+#pragma mark - Constants
+static const NSUInteger __AFFNManagerDefaultConcurrentQueueCount = 4;
+
 @interface AFFNManager : NSObject
 
 - (void)addNetworkOperation:(AFFNRequest *)operation;

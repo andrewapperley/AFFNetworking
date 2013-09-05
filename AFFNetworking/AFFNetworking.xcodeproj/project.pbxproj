@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F2CF76E17D94875008D518B /* UIImageView+AFFNImage.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0FBC9BC717C4640400FEFEC8 /* UIImageView+AFFNImage.h */; };
+		0F2CF76F17D94875008D518B /* AFFNImageManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0FBC9BCC17C4644700FEFEC8 /* AFFNImageManager.h */; };
+		0F2CF77017D94891008D518B /* UIImageView+AFFNImage.h in Resources */ = {isa = PBXBuildFile; fileRef = 0FBC9BC717C4640400FEFEC8 /* UIImageView+AFFNImage.h */; };
+		0F2CF77117D94891008D518B /* AFFNImageManager.h in Resources */ = {isa = PBXBuildFile; fileRef = 0FBC9BCC17C4644700FEFEC8 /* AFFNImageManager.h */; };
 		0F2F182C17C039EA005A411F /* AFFNStreamingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2F182B17C039EA005A411F /* AFFNStreamingRequest.m */; };
 		0F2F182D17C04E63005A411F /* AFFNStreamingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F2F182B17C039EA005A411F /* AFFNStreamingRequest.m */; };
 		0F41DEC817C5ACF1001B0205 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F41DEC717C5ACF1001B0205 /* ViewController.m */; };
@@ -45,16 +49,18 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		0F8F996917B1C02A00671F6F /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				0F2CF76E17D94875008D518B /* UIImageView+AFFNImage.h in CopyFiles */,
+				0F2CF76F17D94875008D518B /* AFFNImageManager.h in CopyFiles */,
 				0FBEF8AB17C1C5C8009F0640 /* AFFNCallbackObject.h in CopyFiles */,
 				0FBEF8AC17C1C5C8009F0640 /* AFFNManager.h in CopyFiles */,
 				0FBEF8AD17C1C5C8009F0640 /* AFFNRequest.h in CopyFiles */,
 				0FBEF8AE17C1C5C8009F0640 /* AFFNStreamingRequest.h in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -354,6 +360,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F2CF77017D94891008D518B /* UIImageView+AFFNImage.h in Resources */,
+				0F2CF77117D94891008D518B /* AFFNImageManager.h in Resources */,
 				0FBEF8C017C1C76C009F0640 /* AFFNCallbackObject.h in Resources */,
 				0FBEF8C217C1C76C009F0640 /* AFFNManager.h in Resources */,
 				0FBEF8C417C1C76C009F0640 /* AFFNRequest.h in Resources */,
@@ -513,6 +521,7 @@
 				DSTROOT = /tmp/AFFNetworking.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AFFNetworking/AFFNetworking-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -526,6 +535,7 @@
 				DSTROOT = /tmp/AFFNetworking.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AFFNetworking/AFFNetworking-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -543,6 +553,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "AFFNetworking-Resources/AFFNetworking-Resources-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -562,6 +573,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "AFFNetworking-Resources/AFFNetworking-Resources-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;

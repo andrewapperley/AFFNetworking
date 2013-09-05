@@ -74,6 +74,11 @@ typedef NS_ENUM(NSUInteger, AFFNPostType)
  * NSArray multiData
  */
 
+#pragma mark - Constants
+static const NSTimeInterval __AFFNDefaultTimeout = 120;
+static const NSURLCacheStoragePolicy __AFFNDefaultStoragePolicy = NSURLCacheStorageAllowedInMemoryOnly;
+static const NSString *__AFFNDefaultMultiSeparator __attribute__((unused)) = @"---------------------_AFFNBoundary_";
+
 @interface AFFNRequest : NSOperation <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 {
     @private
@@ -104,10 +109,7 @@ typedef NS_ENUM(NSUInteger, AFFNPostType)
     void (^_downProgressBlock)(CGFloat downProgress);
 }
 
-#pragma mark - Constants
-const NSTimeInterval __AFFNDefaultTimeout = 120;
-const NSURLCacheStoragePolicy __AFFNDefaultStoragePolicy = NSURLCacheStorageAllowedInMemoryOnly;
-const NSString *__AFFNDefaultMultiSeparator = @"---------------------_AFFNBoundary_";
+
 
 + (AFFNRequest *)requestWithConnectionType:(AFFNPostType)type andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *result))completion andFailure:(void (^)(NSError *error))failure;
 

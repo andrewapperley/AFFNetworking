@@ -31,7 +31,6 @@
 
 #import "AFFNRequest.h"
 
-#pragma mark - Constants
 static NSString *__AFFNKeyExecuting = @"isExecuting";
 static NSString *__AFFNKeyFinished = @"isFinished";
 
