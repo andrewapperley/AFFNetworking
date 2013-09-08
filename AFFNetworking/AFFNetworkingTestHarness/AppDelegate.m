@@ -33,13 +33,13 @@
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Method showing the AFFNetworking call/request types
     [self testingNetworking];
-    // Setup for the AFFNImageManager class
-    [AFFNImageManager sharedManager];
-    // VC that is used to show the AFFNImage class
-    self.viewController = [[ViewController alloc] initWithNibName:nil bundle:nil];
-    self.window.rootViewController = self.viewController;
-    [self.window makeKeyAndVisible];
-    self.window.backgroundColor = [UIColor whiteColor];
+//    // Setup for the AFFNImageManager class
+//    [AFFNImageManager sharedManager];
+//    // VC that is used to show the AFFNImage class
+//    self.viewController = [[ViewController alloc] initWithNibName:nil bundle:nil];
+//    self.window.rootViewController = self.viewController;
+//    [self.window makeKeyAndVisible];
+//    self.window.backgroundColor = [UIColor whiteColor];
     
     return YES;
 }
@@ -108,7 +108,7 @@
     [[AFFNManager sharedManager] addNetworkOperation:request2];
 
     //Create MULTI-POST Request with completion/failure callbacks - Multi-part requests can be constructed with NSData in the array or NSStrings, this example uses NSStrings as I didn't want to included any images but it is made to support that data type.
-    AFFNRequest *request3 = [AFFNRequest requestWithConnectionType:kAFFNPost andURL:@"http://dev.andrewapperley.ca/aff/request_dump.php" andParams:[NSDictionary dictionaryWithObject:@"RandomCrap" forKey:@"ForKey"] withCompletion:^(AFFNCallbackObject *result){
+    AFFNRequest *request3 = [AFFNRequest requestWithConnectionType:kAFFNMulti andURL:@"http://dev.andrewapperley.ca/aff/request_dump.php" andParams:[NSDictionary dictionaryWithObject:@"RandomCrap" forKey:@"ForKey"] withCompletion:^(AFFNCallbackObject *result){
         //Callback block for completion
         
         NSError *error = nil;

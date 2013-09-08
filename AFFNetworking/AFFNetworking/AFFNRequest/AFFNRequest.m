@@ -164,7 +164,7 @@ static NSString *__AFFNKeyFinished = @"isFinished";
         return;
     }
     
-    [self performSelector:_type == (kAFFNPost | kAFFNMulti) ? @selector(generatePOSTRequest) : @selector(generateGETRequest)];
+    [self performSelector:(_type == kAFFNPost || _type == kAFFNMulti) ? @selector(generatePOSTRequest) : @selector(generateGETRequest)];
     
     _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:FALSE];
     
