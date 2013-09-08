@@ -91,7 +91,7 @@ AFFNStreamingRequest - A request that lets you stream the data from a POST reque
 
 **//Create MULTI-POST Request with completion/failure callbacks - Multi-part requests can be constructed with NSData in the array or NSStrings, this example uses NSStrings as I didn't want to included any images but it is made to support that data type.**
 	
-	 AFFNRequest *request3 = [AFFNRequest requestWithConnectionType:kAFFNPost andURL:@"http://dev.andrewapperley.ca/aff/request_dump.php" andParams:[NSDictionary dictionaryWithObject:@"RandomCrap" forKey:@"ForKey"] withCompletion:^(AFFNCallbackObject *result){
+	 AFFNRequest *request3 = [AFFNRequest requestWithConnectionType:kAFFNMulti andURL:@"http://dev.andrewapperley.ca/aff/request_dump.php" andParams:[NSDictionary dictionaryWithObject:@"RandomCrap" forKey:@"ForKey"] withCompletion:^(AFFNCallbackObject *result){
         //Callback block for completion
         
         NSError *error = nil;
