@@ -19,7 +19,9 @@ Copy the "Product" folder or the contents of said folder into your project.
 Add the current line to your <AppName>-Prefix.pch file :
 	
 	    objective-c
-      #import "AFFNManager.h"
+    #import "AFFNetworking/AFFNetworking-Resources.bundle/AFFNManager.h"
+    #import "AFFNetworking/AFFNetworking-Resources.bundle/AFFNImageManager.h"
+    #import "AFFNetworking/AFFNetworking-Resources.bundle/UIImageView+AFFNImage.h"
 
 
 ####Types of Requests
