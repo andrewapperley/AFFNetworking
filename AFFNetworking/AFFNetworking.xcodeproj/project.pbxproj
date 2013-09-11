@@ -33,11 +33,11 @@
 		0FBEF8AC17C1C5C8009F0640 /* AFFNManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 76DB151317BF37D900CE127E /* AFFNManager.h */; };
 		0FBEF8AD17C1C5C8009F0640 /* AFFNRequest.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 76DB151617BF37D900CE127E /* AFFNRequest.h */; };
 		0FBEF8AE17C1C5C8009F0640 /* AFFNStreamingRequest.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0F2F182A17C039EA005A411F /* AFFNStreamingRequest.h */; };
-		0FBEF8B517C1C719009F0640 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FBEF8B417C1C719009F0640 /* CoreFoundation.framework */; };
 		0FBEF8C017C1C76C009F0640 /* AFFNCallbackObject.h in Resources */ = {isa = PBXBuildFile; fileRef = 76DB151017BF37D900CE127E /* AFFNCallbackObject.h */; };
 		0FBEF8C217C1C76C009F0640 /* AFFNManager.h in Resources */ = {isa = PBXBuildFile; fileRef = 76DB151317BF37D900CE127E /* AFFNManager.h */; };
 		0FBEF8C417C1C76C009F0640 /* AFFNRequest.h in Resources */ = {isa = PBXBuildFile; fileRef = 76DB151617BF37D900CE127E /* AFFNRequest.h */; };
 		0FBEF8C617C1C76C009F0640 /* AFFNStreamingRequest.h in Resources */ = {isa = PBXBuildFile; fileRef = 0F2F182A17C039EA005A411F /* AFFNStreamingRequest.h */; };
+		0FC367C417E00D2B00DB3620 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FBEF8B417C1C719009F0640 /* CoreFoundation.framework */; };
 		76DB151817BF37D900CE127E /* AFFNCallbackObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DB151117BF37D900CE127E /* AFFNCallbackObject.m */; };
 		76DB151917BF37D900CE127E /* AFFNCallbackObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DB151117BF37D900CE127E /* AFFNCallbackObject.m */; };
 		76DB151A17BF37D900CE127E /* AFFNManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 76DB151417BF37D900CE127E /* AFFNManager.m */; };
@@ -131,7 +131,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0FBEF8B517C1C719009F0640 /* CoreFoundation.framework in Frameworks */,
+				0FC367C417E00D2B00DB3620 /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -574,6 +574,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -593,6 +594,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;

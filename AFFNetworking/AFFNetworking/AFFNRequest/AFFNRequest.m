@@ -83,12 +83,12 @@ static NSString *__AFFNKeyFinished = @"isFinished";
     return [[[self alloc] initWithConnectionType:type andURL:urlString andParams:params withCompletion:completion andFailure:failure andUploadProgressBlock:nil andDownloadProgressBlock:nil andMultiData:nil] autorelease];
 }
 
-+ (AFFNRequest *)requestWithConnectionType:(AFFNPostType)type andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *))completion andFailure:(void (^)(NSError *))failure andUploadProgressBlock:(void (^)(CGFloat))uploadProgressBlock andDownloadProgressBlock:(void (^)(float))downloadProgressBlock
++ (AFFNRequest *)requestWithConnectionType:(AFFNPostType)type andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *))completion andFailure:(void (^)(NSError *))failure andUploadProgressBlock:(void (^)(CGFloat))uploadProgressBlock andDownloadProgressBlock:(void (^)(CGFloat))downloadProgressBlock
 {
     return [[[self alloc] initWithConnectionType:type andURL:urlString andParams:params withCompletion:completion andFailure:failure andUploadProgressBlock:uploadProgressBlock andDownloadProgressBlock:downloadProgressBlock andMultiData:nil] autorelease];
 }
 
-+ (AFFNRequest *)requestWithConnectionType:(AFFNPostType)type andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *))completion andFailure:(void (^)(NSError *))failure andUploadProgressBlock:(void (^)(CGFloat))uploadProgressBlock andDownloadProgressBlock:(void (^)(float))downloadProgressBlock andMultiData:(NSArray *)multiData
++ (AFFNRequest *)requestWithConnectionType:(AFFNPostType)type andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *))completion andFailure:(void (^)(NSError *))failure andUploadProgressBlock:(void (^)(CGFloat))uploadProgressBlock andDownloadProgressBlock:(void (^)(CGFloat))downloadProgressBlock andMultiData:(NSArray *)multiData
 {
     return [[[self alloc] initWithConnectionType:type andURL:urlString andParams:params withCompletion:completion andFailure:failure andUploadProgressBlock:uploadProgressBlock andDownloadProgressBlock:downloadProgressBlock andMultiData:multiData] autorelease];
 }
@@ -98,7 +98,7 @@ static NSString *__AFFNKeyFinished = @"isFinished";
     return [self initWithConnectionType:type andURL:urlString andParams:params withCompletion:completion andFailure:failure andUploadProgressBlock:nil andDownloadProgressBlock:nil andMultiData:nil];
 }
 
-- (AFFNRequest *)initWithConnectionType:(AFFNPostType)type andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *))completion andFailure:(void (^)(NSError *))failure andUploadProgressBlock:(void (^)(CGFloat))uploadProgressBlock andDownloadProgressBlock:(void (^)(float))downloadProgressBlock andMultiData:(NSArray *)multiData
+- (AFFNRequest *)initWithConnectionType:(AFFNPostType)type andURL:(NSString *)urlString andParams:(NSDictionary *)params withCompletion:(void (^)(AFFNCallbackObject *))completion andFailure:(void (^)(NSError *))failure andUploadProgressBlock:(void (^)(CGFloat))uploadProgressBlock andDownloadProgressBlock:(void (^)(CGFloat))downloadProgressBlock andMultiData:(NSArray *)multiData
 {
     self = [super init];
     if(self)
@@ -223,7 +223,7 @@ static NSString *__AFFNKeyFinished = @"isFinished";
         [data appendData:[[NSString stringWithFormat:@"--%@--\r\n",_multiSeparator] dataUsingEncoding:NSUTF8StringEncoding]];
     }
     [request setHTTPBody:data];
-    [request setValue:[NSString stringWithFormat:@"%d", data.length] forHTTPHeaderField:@"Content-Length"];
+    [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)data.length] forHTTPHeaderField:@"Content-Length"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     [request setValue:@"" forHTTPHeaderField:@"Accept-Encoding"];//this is so you can measure download response time, without this line it has the option to compress the response, if it does compress it then you cant predict the size and the "expectedSize" will be -1
     [request setValue:@"iOS" forHTTPHeaderField:@"User-Agent"];

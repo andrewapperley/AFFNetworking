@@ -107,7 +107,7 @@
     //Hashes the url to the image with MD5, used as the file name and checks later on
     unsigned char digest[16];
     
-    CC_MD5([lurl UTF8String], strlen([lurl UTF8String]), digest);
+    CC_MD5([lurl UTF8String], (CC_LONG)strlen([lurl UTF8String]), digest);
     
     NSMutableString *output = [[[NSMutableString alloc] initWithCapacity:CC_MD5_DIGEST_LENGTH] autorelease];
     
