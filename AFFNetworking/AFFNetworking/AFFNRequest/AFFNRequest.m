@@ -205,9 +205,10 @@ static NSString *__AFFNKeyFinished = @"isFinished";
     
     NSData *jsonData = [NSData data];
     
-    NSError *error;
+    NSError *error = nil;
     
-    jsonData = [NSJSONSerialization dataWithJSONObject:_params options:NSJSONWritingPrettyPrinted error:&error];
+    if(_params)
+        jsonData = [NSJSONSerialization dataWithJSONObject:_params options:NSJSONWritingPrettyPrinted error:&error];
     
     if(error)
         assert(error);

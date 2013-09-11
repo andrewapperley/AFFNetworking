@@ -93,12 +93,6 @@
 		0FBEF8B817C1C71A009F0640 /* AFFNetworking-Resources-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AFFNetworking-Resources-Info.plist"; sourceTree = "<group>"; };
 		0FBEF8BA17C1C71A009F0640 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0FBEF8BC17C1C71A009F0640 /* AFFNetworking-Resources-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AFFNetworking-Resources-Prefix.pch"; sourceTree = "<group>"; };
-		0FC3676A17DFF5A100DB3620 /* AFFNCallbackObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFFNCallbackObject.h; sourceTree = "<group>"; };
-		0FC3676B17DFF5A100DB3620 /* AFFNImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFFNImageManager.h; sourceTree = "<group>"; };
-		0FC3676C17DFF5A100DB3620 /* AFFNManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFFNManager.h; sourceTree = "<group>"; };
-		0FC3676D17DFF5A100DB3620 /* AFFNRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFFNRequest.h; sourceTree = "<group>"; };
-		0FC3676E17DFF5A100DB3620 /* AFFNStreamingRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFFNStreamingRequest.h; sourceTree = "<group>"; };
-		0FC3676F17DFF5A100DB3620 /* UIImageView+AFFNImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFFNImage.h"; sourceTree = "<group>"; };
 		76DB151017BF37D900CE127E /* AFFNCallbackObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFFNCallbackObject.h; sourceTree = "<group>"; };
 		76DB151117BF37D900CE127E /* AFFNCallbackObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFFNCallbackObject.m; sourceTree = "<group>"; };
 		76DB151317BF37D900CE127E /* AFFNManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFFNManager.h; sourceTree = "<group>"; };
@@ -174,7 +168,6 @@
 				0FBEF8B617C1C71A009F0640 /* AFFNetworking-Resources */,
 				0F8F996D17B1C02A00671F6F /* Frameworks */,
 				0F8F996C17B1C02A00671F6F /* Products */,
-				0FC3676817DFF5A100DB3620 /* include */,
 			);
 			sourceTree = "<group>";
 		};
@@ -226,27 +219,6 @@
 				0FBEF8BC17C1C71A009F0640 /* AFFNetworking-Resources-Prefix.pch */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		0FC3676817DFF5A100DB3620 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				0FC3676917DFF5A100DB3620 /* AFFNetworking */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		0FC3676917DFF5A100DB3620 /* AFFNetworking */ = {
-			isa = PBXGroup;
-			children = (
-				0FC3676A17DFF5A100DB3620 /* AFFNCallbackObject.h */,
-				0FC3676B17DFF5A100DB3620 /* AFFNImageManager.h */,
-				0FC3676C17DFF5A100DB3620 /* AFFNManager.h */,
-				0FC3676D17DFF5A100DB3620 /* AFFNRequest.h */,
-				0FC3676E17DFF5A100DB3620 /* AFFNStreamingRequest.h */,
-				0FC3676F17DFF5A100DB3620 /* UIImageView+AFFNImage.h */,
-			);
-			path = AFFNetworking;
 			sourceTree = "<group>";
 		};
 		76DB150E17BF37D900CE127E /* AFFNetworking */ = {
