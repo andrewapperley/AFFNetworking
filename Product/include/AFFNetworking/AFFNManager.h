@@ -33,7 +33,7 @@
 #import "AFFNStreamingRequest.h"
 
 #pragma mark - Constants
-const NSUInteger __AFFNManagerDefaultConcurrentQueueCount = 4;
+static const NSUInteger __AFFNManagerDefaultConcurrentQueueCount = 4;
 
 @interface AFFNManager : NSObject
 
