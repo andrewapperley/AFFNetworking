@@ -36,7 +36,9 @@ typedef NS_ENUM(NSUInteger, AFFNPostType)
 {
     kAFFNPost,
     kAFFNGet,
-    kAFFNMulti
+    kAFFNMulti,
+    kAFFNPut,
+    kAFFNDelete
 };
 
 /*

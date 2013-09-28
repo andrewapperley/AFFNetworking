@@ -192,7 +192,7 @@ static NSString *__AFFNKeyFinished = @"isFinished";
     
     request = [[NSMutableURLRequest alloc] initWithURL:finalURL cachePolicy:_storagePolicy timeoutInterval:_timeoutInterval];
     
-    [request setHTTPMethod:@"POST"];
+    [request setHTTPMethod:_type == kAFFNPost ? @"POST" : _type == kAFFNPut ? @"PUT" : @"DELETE"];
     
     NSMutableData *data = [NSMutableData new];
     
