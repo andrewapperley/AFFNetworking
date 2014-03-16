@@ -141,5 +141,5 @@ AFFNStreamingRequest - A request that lets you stream the data from a POST reque
     [self.view addSubview:iv];
 
 ##Changelog
-* August 18th, 2013 - Initial Release as a static library - 1.0.1
-* September 5th, 2013 - Release with AFFNImage, added GET type to StreamingRequests, and cleaned up code - 1.1
+* August 18th, 2013 - Initial Release as a static library - 0.0.1
+* September 5th, 2013 - Release with AFFNImage, added GET type to StreamingRequests, and cleaned up code - 0.1.1
